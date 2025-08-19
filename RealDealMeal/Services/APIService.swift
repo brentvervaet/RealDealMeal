@@ -1,0 +1,23 @@
+//
+//  APIService.swift
+//  RealDealMeal
+//
+//  Created by Brent Vervaet on 19/08/2025.
+//
+
+import Foundation
+
+class APIService {
+	static let shared = APIService()
+	private init() {}
+	
+	func fetchMeals(query: String) async throws -> [Meal] {
+		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/search.php?s=\(query)") else {
+			throw URLError(.badURL)
+		}
+		
+		let (data, _) = try await URLSession.shared.data(from: url)
+		let response = try JSONDecoder().decode(MealResponse.self, from: data)
+		return response.meals ?? []
+	}
+}
