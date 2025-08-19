@@ -1,0 +1,17 @@
+//
+//  RealDealMealApp.swift
+//  RealDealMeal
+//
+//  Created by Brent Vervaet on 19/08/2025.
+//
+
+import SwiftUI
+
+@main
+struct RealDealMealApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
