@@ -6,8 +6,21 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		ABD96FD22E54BE160037DCA4 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD12E54BE160037DCA4 /* Meal.swift */; };
+		ABD96FD42E54BE370037DCA4 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD32E54BE370037DCA4 /* APIService.swift */; };
+		ABD96FD62E54BE630037DCA4 /* MealListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */; };
+		ABD96FDA2E54BE920037DCA4 /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD92E54BE920037DCA4 /* MealDetailView.swift */; };
+		ABD96FDC2E54BF1F0037DCA4 /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FDB2E54BF1F0037DCA4 /* MealListView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		ABD96FC32E54BDBC0037DCA4 /* RealDealMeal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealDealMeal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABD96FD12E54BE160037DCA4 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		ABD96FD32E54BE370037DCA4 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListViewModel.swift; sourceTree = "<group>"; };
+		ABD96FD92E54BE920037DCA4 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
+		ABD96FDB2E54BF1F0037DCA4 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +45,10 @@
 		ABD96FBA2E54BDBC0037DCA4 = {
 			isa = PBXGroup;
 			children = (
+				ABD96FDD2E54C0820037DCA4 /* Models */,
+				ABD96FE12E54C0DA0037DCA4 /* ViewModels */,
+				ABD96FE22E54C1950037DCA4 /* Views */,
+				ABD96FE02E54C0CC0037DCA4 /* Services */,
 				ABD96FC52E54BDBC0037DCA4 /* RealDealMeal */,
 				ABD96FC42E54BDBC0037DCA4 /* Products */,
 			);
@@ -43,6 +60,39 @@
 				ABD96FC32E54BDBC0037DCA4 /* RealDealMeal.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		ABD96FDD2E54C0820037DCA4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ABD96FD12E54BE160037DCA4 /* Meal.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ABD96FE02E54C0CC0037DCA4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				ABD96FD32E54BE370037DCA4 /* APIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		ABD96FE12E54C0DA0037DCA4 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		ABD96FE22E54C1950037DCA4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ABD96FD92E54BE920037DCA4 /* MealDetailView.swift */,
+				ABD96FDB2E54BF1F0037DCA4 /* MealListView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +169,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABD96FD22E54BE160037DCA4 /* Meal.swift in Sources */,
+				ABD96FD42E54BE370037DCA4 /* APIService.swift in Sources */,
+				ABD96FDA2E54BE920037DCA4 /* MealDetailView.swift in Sources */,
+				ABD96FDC2E54BF1F0037DCA4 /* MealListView.swift in Sources */,
+				ABD96FD62E54BE630037DCA4 /* MealListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
