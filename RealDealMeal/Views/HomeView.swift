@@ -17,6 +17,8 @@ struct HomeView: View {
 				Text("home")
 			}
 			//TODO: daily recipes
+			.background(Color(.systemBackground))
+			.background(Color(.systemGroupedBackground).ignoresSafeArea())
 			.navigationTitle("Home")
 		}
 	}
@@ -24,26 +26,26 @@ struct HomeView: View {
 
 /* TODO: meal card
  struct DailyMealCard: View {
-	let meal: Meal
-	
-	var body: some View {
-		VStack {
-			AsyncImage(url: URL(string: meal.strMealThumb)) { image in
-				image.resizable()
-					.scaledToFill()
-			} placeholder: {
-				Color.gray.opacity(0.3)
-			}
-			.frame(width: 160, height: 100)
-			.clipShape(RoundedRectangle(cornerRadius: 10))
-			
-			Text(meal.strMeal)
-				.font(.headline)
-				.lineLimit(2)
-				.frame(width: 160, alignment: .leading)
-		}
-	}
-}*/
+ let meal: Meal
+ 
+ var body: some View {
+ VStack {
+ AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+ image.resizable()
+ .scaledToFill()
+ } placeholder: {
+ Color.gray.opacity(0.3)
+ }
+ .frame(width: 160, height: 100)
+ .clipShape(RoundedRectangle(cornerRadius: 10))
+ 
+ Text(meal.strMeal)
+ .font(.headline)
+ .lineLimit(2)
+ .frame(width: 160, alignment: .leading)
+ }
+ }
+ }*/
 
 #Preview {
 	HomeView()

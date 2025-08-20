@@ -17,26 +17,40 @@ struct FavoritesView: View {
 					.foregroundColor(.secondary)
 					.padding()
 			} else {
-				List(favoritesVM.favorites) { meal in
-					NavigationLink(destination: MealDetailView(meal: meal)) {
-						HStack {
-							AsyncImage(url: URL(string: meal.strMealThumb)) { image in
-								image.resizable()
-									 .scaledToFill()
-							} placeholder: {
-								Color.gray.opacity(0.3)
+				ScrollView {
+					LazyVStack(spacing: 12) {
+						ForEach(favoritesVM.favorites) { meal in
+							NavigationLink(destination: MealDetailView(meal: meal)) {
+								HStack(spacing: 16) {
+									AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+										image.resizable()
+											.scaledToFill()
+									} placeholder: {
+										Color.gray.opacity(0.3)
+									}
+									.frame(width: 80, height: 80)
+									.clipShape(RoundedRectangle(cornerRadius: 12))
+									
+									Text(meal.strMeal)
+										.font(.headline)
+										.foregroundColor(.primary)
+									
+									Spacer()
+								}
+								.padding()
+								.background(Color(.systemBackground))
+								.cornerRadius(12)
+								.shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
 							}
-							.frame(width: 60, height: 60)
-							.clipShape(RoundedRectangle(cornerRadius: 8))
-							
-							Text(meal.strMeal)
-								.font(.headline)
 						}
 					}
+					.padding()
 				}
-				//TODO: title needs to stay even when no favorites
 				.navigationTitle("Favorites")
+				//.background(Color(.systemGroupedBackground).ignoresSafeArea())
 			}
 		}
 	}
 }
+
+
