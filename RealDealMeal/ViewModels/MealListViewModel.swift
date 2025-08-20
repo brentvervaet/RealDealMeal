@@ -14,6 +14,9 @@ class MealListViewModel: ObservableObject {
 	@Published var isLoading = false
 	@Published var errorMessage: String? = nil
 	
+	@Published var categories: [MealCategory] = []
+	@Published var selectedCategory: MealCategory?
+	
 	func searchMeals() async {
 		guard !searchQuery.isEmpty else { return }
 		isLoading = true
@@ -25,5 +28,25 @@ class MealListViewModel: ObservableObject {
 			errorMessage = "Failed to load meals: \(error.localizedDescription)"
 		}
 		isLoading = false
+	}
+	
+	func loadCategories() async {
+		do {
+			let cats = try await APIService.shared.fetchCategories()
+			categories = cats
+		} catch {
+			print("Error fetching categories: \(error)")
+		}
+	}
+
+	func fetchMealsByCategory(_ category: MealCategory) async {
+		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/filter.php?c=\(category.strCategory)") else { return }
+		do {
+			let (data, _) = try await URLSession.shared.data(from: url)
+			let response = try JSONDecoder().decode(MealResponse.self, from: data)
+			meals = response.meals ?? []
+		} catch {
+			print("Error fetching meals by category: \(error)")
+		}
 	}
 }

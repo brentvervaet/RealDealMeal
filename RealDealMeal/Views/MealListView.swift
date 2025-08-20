@@ -16,12 +16,13 @@ struct MealListView: View {
 		NavigationStack {
 			VStack {
 				searchBar
+				categoryList
 				if let errorMessage = mealListVM.errorMessage {
 					Text(errorMessage)
 						.foregroundColor(.red)
 						.padding()
 				} else {
-				mealList
+					mealList
 				}
 			}
 			.navigationTitle("Find a recipe")
@@ -42,6 +43,36 @@ struct MealListView: View {
 		}
 		.padding(.horizontal)
 		.padding(.top)
+	}
+	
+	private var categoryList: some View {
+		ScrollView(.horizontal, showsIndicators: false) {
+			HStack(spacing: 12) {
+				ForEach(mealListVM.categories) { category in
+					Button {
+						Task { await mealListVM.fetchMealsByCategory(category) }
+						mealListVM.selectedCategory = category
+					} label: {
+						Text(category.strCategory)
+							.padding(.vertical, 8)
+							.padding(.horizontal, 12)
+							.background(
+								mealListVM.selectedCategory == category ?
+								Color.accentColor : Color(.systemGray5)
+							)
+							.foregroundColor(
+								mealListVM.selectedCategory == category ?
+									.white : .primary
+							)
+							.clipShape(Capsule())
+					}
+				}
+			}
+			.padding(.horizontal)
+			.onAppear {
+				Task { await mealListVM.loadCategories() }
+			}
+		}
 	}
 	
 	private var mealList: some View {

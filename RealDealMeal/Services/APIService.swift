@@ -20,4 +20,14 @@ class APIService {
 		let response = try JSONDecoder().decode(MealResponse.self, from: data)
 		return response.meals ?? []
 	}
+	
+	func fetchCategories() async throws -> [MealCategory] {
+		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/list.php?c=list") else {
+			throw URLError(.badURL)
+		}
+		
+		let (data, _) = try await URLSession.shared.data(from: url)
+		let response = try JSONDecoder().decode(CategoryResponse.self, from: data)
+		return response.meals
+	}
 }
