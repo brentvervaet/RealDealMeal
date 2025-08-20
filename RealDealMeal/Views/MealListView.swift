@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+//TODO: add categories underneath the search bar, then give a list of those meals (kindof a filter)
+
 struct MealListView: View {
 	@StateObject private var mealListVM = MealListViewModel()
 	
@@ -50,8 +52,7 @@ struct MealListView: View {
 					}
 				}
 			}
-			.navigationTitle("Find recipe")//Recipe finder
-			
+			.navigationTitle("Find a recipe")
 		}
 	}
 }

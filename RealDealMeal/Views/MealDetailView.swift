@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MealDetailView: View {
 	let meal: Meal
+	@EnvironmentObject var favoritesVM: FavoritesViewModel
 	
 	var body: some View {
 		ScrollView {
@@ -21,9 +22,19 @@ struct MealDetailView: View {
 				}
 				.clipShape(RoundedRectangle(cornerRadius: 12))
 				
-				Text(meal.strMeal)
-					.font(.title)
-					.fontWeight(.bold)
+				HStack {
+					Text(meal.strMeal)
+						.font(.title)
+						.fontWeight(.bold)
+					Spacer()
+					Button {
+						favoritesVM.toggleFavorite(meal)
+					} label: {
+						Image(systemName: favoritesVM.isFavorite(meal) ? "star.fill" : "star")
+							.foregroundColor(.yellow)
+							.font(.title2)
+					}
+				}
 				
 				if let instructions = meal.strInstructions {
 					Text(instructions)

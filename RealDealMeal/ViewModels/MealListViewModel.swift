@@ -7,7 +7,7 @@
 
 import Foundation
 
-//@MainActor
+@MainActor
 class MealListViewModel: ObservableObject {
 	@Published var meals: [Meal] = []
 	@Published var searchQuery: String = ""

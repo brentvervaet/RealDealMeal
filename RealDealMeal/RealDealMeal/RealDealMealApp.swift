@@ -8,10 +8,28 @@
 import SwiftUI
 
 @main
-struct RealDealMealApp: App {
+struct RecipeFinderApp: App {
+	@StateObject private var favoritesVM = FavoritesViewModel()
+	
 	var body: some Scene {
 		WindowGroup {
-			MealListView()
+			TabView {
+				
+				/*HomeView()
+					.tabItem {
+						Label("Home", systemImage: "house")
+					}*/
+				FavoritesView()
+					.tabItem {
+						Label("Favorites", systemImage: "star.fill")
+					}
+				MealListView()
+					.tabItem {
+						Label("Search", systemImage: "magnifyingglass")
+					}
+				
+			}
+			.environmentObject(favoritesVM)
 		}
 	}
 }
