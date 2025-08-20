@@ -31,8 +31,14 @@ struct MealDetailView: View {
 					Button {
 						favoritesVM.toggleFavorite(meal)
 					} label: {
-						Image(systemName: favoritesVM.isFavorite(meal) ? "star.fill" : "star")
-							.foregroundColor(.yellow)
+						Image(systemName: favoritesVM.isFavorite(meal) ? "heart.fill" : "heart")
+							.foregroundColor(.red)
+							.font(.title2)
+					}
+					Button {
+					} label: {
+						Image(systemName: "square.and.arrow.up")
+						//	.foregroundColor(.tint)
 							.font(.title2)
 					}
 				}
@@ -42,6 +48,7 @@ struct MealDetailView: View {
 						Text("Ingredients")
 							.font(.title)
 							.fontWeight(.semibold)
+							.underline()
 						LazyVStack(alignment: .leading, spacing: 4) {
 							ForEach(meal.ingredients, id: \.ingredient) { item in
 								HStack(alignment: .top, spacing: 6) {
@@ -50,15 +57,18 @@ struct MealDetailView: View {
 								}
 							}
 						}
+						.padding(.vertical)
 					}
 					
+					Divider()
+					
 					if !meal.instructionSteps.isEmpty {
-						Divider()
 						
 						VStack(alignment: .leading, spacing: 8) {
 							Text("Instructions")
 								.font(.title)
 								.fontWeight(.semibold)
+								.underline()
 							ForEach(Array(meal.instructionSteps.enumerated()), id: \.offset) { index, step in
 								HStack(alignment: .top, spacing: 6) {
 									Text("Step \(index + 1).")
@@ -74,10 +84,15 @@ struct MealDetailView: View {
 				.padding()
 				.background(Color(.systemBackground))
 				.clipShape(RoundedRectangle(cornerRadius: 12))
+				.overlay(
+					RoundedRectangle(
+						cornerRadius: 12,
+					)
+					.stroke(.gray.opacity(0.1))
+				)
 				.shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
 			}
 			.padding()
-			//.background(Color(UIColor.secondarySystemBackground))
 		}
 		.navigationTitle(meal.strMeal)
 		.navigationBarTitleDisplayMode(.inline)

@@ -14,15 +14,16 @@ struct RecipeFinderApp: App {
 	var body: some Scene {
 		WindowGroup {
 			TabView {
+				FavoritesView()
+					.tabItem {
+						Label("Favorites", systemImage: "heart.fill")
+					}
 				
 				HomeView()
 					.tabItem {
 						Label("Home", systemImage: "house")
 					}
-				FavoritesView()
-					.tabItem {
-						Label("Favorites", systemImage: "star.fill")
-					}
+				
 				MealListView()
 					.tabItem {
 						Label("Search", systemImage: "magnifyingglass")
