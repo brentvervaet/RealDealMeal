@@ -13,7 +13,7 @@ struct FavoritesView: View {
 	var body: some View {
 		NavigationStack {
 			if favoritesVM.favorites.isEmpty {
-				Text("No favorites yet ⭐")
+				Text("No favorites yet")
 					.foregroundColor(.secondary)
 					.padding()
 			} else {

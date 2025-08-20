@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-	@StateObject private var homeVM = HomeViewModel()
+	//@StateObject private var homeVM = HomeViewModel()
 	@EnvironmentObject var favoritesVM: FavoritesViewModel
 	
 	var body: some View {
