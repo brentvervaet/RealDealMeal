@@ -5,14 +5,15 @@
 //  Created by Brent Vervaet on 20/08/2025.
 //
 
-import SwiftUI
+/*import SwiftUI
 
-struct FavoritesViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-#Preview {
-    FavoritesViewModel()
-}
+class FavoritesViewModel: ObservableObject {
+	@AppStorage("favoriteMeals") private var favoriteMealsIDs: [String] = []
+	@Published var favorites: [Meal] = []
+	
+	func toggleFavorite(_ meal: Meal) {
+		if let index = favoriteMealsIDs.firstIndex(of: meal.id) {
+			
+		}
+	}
+}*/
