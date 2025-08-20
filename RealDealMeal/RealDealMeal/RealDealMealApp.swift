@@ -15,10 +15,10 @@ struct RecipeFinderApp: App {
 		WindowGroup {
 			TabView {
 				
-				/*HomeView()
+				HomeView()
 					.tabItem {
 						Label("Home", systemImage: "house")
-					}*/
+					}
 				FavoritesView()
 					.tabItem {
 						Label("Favorites", systemImage: "star.fill")
