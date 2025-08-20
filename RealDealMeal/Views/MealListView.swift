@@ -79,7 +79,7 @@ struct MealListView: View {
 		ScrollView {
 			LazyVStack(spacing: 12) {
 				ForEach(mealListVM.meals) { meal in
-					NavigationLink(destination: MealDetailView(meal: meal)) {
+					NavigationLink(destination: MealDetailWrapperView(mealID: meal.idMeal)) {
 						HStack(spacing: 16) {
 							AsyncImage(url: URL(string: meal.strMealThumb)) { image in
 								image.resizable()
@@ -114,6 +114,42 @@ struct MealListView: View {
 			}
 			.padding()
 		}
+	}
+}
+
+struct MealDetailWrapperView: View {
+	let mealID: String
+	@State private var meal: Meal? = nil
+	@State private var isLoading = true
+	@State private var errorMessage: String? = nil
+	
+	var body: some View {
+		Group {
+			if isLoading {
+				ProgressView("Loading details...")
+			} else if let meal = meal {
+				MealDetailView(meal: meal)
+			} else if let errorMessage = errorMessage {
+				Text(errorMessage).foregroundColor(.red)
+			}
+		}
+		.task {
+			await loadDetails()
+		}
+		.navigationTitle("Details")
+		.navigationBarTitleDisplayMode(.inline)
+	}
+	
+	private func loadDetails() async {
+		do {
+			self.isLoading = true
+			let detailedMeal = try await APIService.shared.fetchMealDetail(id: mealID)
+			self.meal = detailedMeal
+			self.errorMessage = nil
+		} catch {
+			self.errorMessage = "Failed to load details"
+		}
+		self.isLoading = false
 	}
 }
 
