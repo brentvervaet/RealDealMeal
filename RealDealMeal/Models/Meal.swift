@@ -85,4 +85,12 @@ struct Meal: Codable, Identifiable, Hashable {
 		}
 		return result
 	}
+	
+	var instructionSteps: [String] {
+		guard let strInstructions = strInstructions else { return [] }
+		return strInstructions
+			.components(separatedBy: CharacterSet.newlines)
+			.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+			.filter { !$0.isEmpty }
+	}
 }

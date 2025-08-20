@@ -25,7 +25,7 @@ struct MealDetailView: View {
 				
 				HStack {
 					Text(meal.strMeal)
-						.font(.title)
+						.font(.largeTitle)
 						.fontWeight(.bold)
 					Spacer()
 					Button {
@@ -40,38 +40,46 @@ struct MealDetailView: View {
 				VStack(alignment: .leading) {
 					VStack(alignment: .leading, spacing: 8) {
 						Text("Ingredients")
-							.font(.headline)
+							.font(.title)
 							.fontWeight(.semibold)
-						ForEach(meal.ingredients, id: \.ingredient) { item in
-							Text("\(item.measure) \(item.ingredient)")
-								.fontWeight(.medium)
+						LazyVStack(alignment: .leading, spacing: 4) {
+							ForEach(meal.ingredients, id: \.ingredient) { item in
+								HStack(alignment: .top, spacing: 6) {
+									Text("•")
+									Text(item.measure).bold() + Text(" \(item.ingredient)")
+								}
+							}
 						}
 					}
 					
-					if let instructions = meal.strInstructions {
+					if !meal.instructionSteps.isEmpty {
 						Divider()
 						
 						VStack(alignment: .leading, spacing: 8) {
 							Text("Instructions")
-								.font(.headline)
+								.font(.title)
 								.fontWeight(.semibold)
-							Text(instructions)
-								.font(.body)
-								.multilineTextAlignment(.leading)
-								.fontWeight(.medium)
+							ForEach(Array(meal.instructionSteps.enumerated()), id: \.offset) { index, step in
+								HStack(alignment: .top, spacing: 6) {
+									Text("Step \(index + 1).")
+										.bold()
+									Text(step)
+										.font(.body)
+										.multilineTextAlignment(.leading)
+								}
+							}
 						}
 					}
 				}
 				.padding()
-				.background(Color(UIColor.systemBackground))
+				.background(Color(.systemBackground))
 				.clipShape(RoundedRectangle(cornerRadius: 12))
 				.shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
 			}
 			.padding()
-			.background(Color(UIColor.secondarySystemBackground))
+			//.background(Color(UIColor.secondarySystemBackground))
 		}
 		.navigationTitle(meal.strMeal)
 		.navigationBarTitleDisplayMode(.inline)
 	}
 }
-
