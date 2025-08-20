@@ -25,10 +25,27 @@ struct MealDetailView: View {
 				
 				titleAndButtons
 				
-				VStack(alignment: .leading) {
-					ingredients
-					Divider()
-					instructions
+				VStack(alignment: .leading, spacing: 16) {
+					if meal.ingredients.isEmpty && meal.instructionSteps.isEmpty {
+						HStack {
+							Spacer()
+							Text("Coming soon...")
+								.foregroundColor(.secondary)
+								.italic()
+							Spacer()
+						}
+						.frame(maxWidth: .infinity)
+					} else {
+						if !meal.ingredients.isEmpty {
+							ingredients
+						}
+						if !meal.ingredients.isEmpty && !meal.instructionSteps.isEmpty {
+							Divider()
+						}
+						if !meal.instructionSteps.isEmpty {
+							instructions
+						}
+					}
 				}
 				.padding()
 				.background(Color(.systemBackground))

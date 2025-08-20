@@ -14,7 +14,7 @@ struct MealListView: View {
 	
 	var body: some View {
 		NavigationStack {
-			VStack {
+			VStack(alignment: .leading) {
 				searchBar
 				categoryList
 				if let errorMessage = mealListVM.errorMessage {
@@ -95,6 +95,9 @@ struct MealListView: View {
 								.foregroundColor(.primary)
 							
 							Spacer()
+							Image(systemName: "chevron.right")
+								.foregroundColor(.gray)
+								.font(.system(size: 14, weight: .semibold))
 						}
 						.padding()
 						.background(Color(.systemBackground))

@@ -36,6 +36,9 @@ struct FavoritesView: View {
 										.foregroundColor(.primary)
 									
 									Spacer()
+									Image(systemName: "chevron.right")
+										.foregroundColor(.gray)
+										.font(.system(size: 14, weight: .semibold))
 								}
 								.padding()
 								.background(Color(.systemBackground))
