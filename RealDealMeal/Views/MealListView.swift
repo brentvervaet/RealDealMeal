@@ -40,7 +40,7 @@ struct MealListView: View {
 								} placeholder: {
 									Color.gray.opacity(0.3)
 								}
-								.frame(width: 60, height: 60)
+								.frame(width: 80, height: 80)
 								.clipShape(RoundedRectangle(cornerRadius: 8))
 								
 								Text(meal.strMeal)
