@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB2385652E55EAF0005A246D /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2385642E55EAF0005A246D /* FavoritesViewModel.swift */; };
 		ABD96FD22E54BE160037DCA4 /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD12E54BE160037DCA4 /* Meal.swift */; };
 		ABD96FD42E54BE370037DCA4 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD32E54BE370037DCA4 /* APIService.swift */; };
 		ABD96FD62E54BE630037DCA4 /* MealListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB2385642E55EAF0005A246D /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		ABD96FC32E54BDBC0037DCA4 /* RealDealMeal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealDealMeal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABD96FD12E54BE160037DCA4 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		ABD96FD32E54BE370037DCA4 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -45,11 +47,11 @@
 		ABD96FBA2E54BDBC0037DCA4 = {
 			isa = PBXGroup;
 			children = (
+				ABD96FC52E54BDBC0037DCA4 /* RealDealMeal */,
 				ABD96FDD2E54C0820037DCA4 /* Models */,
 				ABD96FE12E54C0DA0037DCA4 /* ViewModels */,
 				ABD96FE22E54C1950037DCA4 /* Views */,
 				ABD96FE02E54C0CC0037DCA4 /* Services */,
-				ABD96FC52E54BDBC0037DCA4 /* RealDealMeal */,
 				ABD96FC42E54BDBC0037DCA4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */,
+				AB2385642E55EAF0005A246D /* FavoritesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB2385652E55EAF0005A246D /* FavoritesViewModel.swift in Sources */,
 				ABD96FD22E54BE160037DCA4 /* Meal.swift in Sources */,
 				ABD96FD42E54BE370037DCA4 /* APIService.swift in Sources */,
 				ABD96FDA2E54BE920037DCA4 /* MealDetailView.swift in Sources */,
