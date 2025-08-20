@@ -16,7 +16,7 @@ struct MealDetailView: View {
 			VStack(alignment: .leading, spacing: 16) {
 				AsyncImage(url: URL(string: meal.strMealThumb)) { image in
 					image.resizable()
-						 .scaledToFit()
+						.scaledToFit()
 				} placeholder: {
 					Color.gray.opacity(0.3)
 				}
