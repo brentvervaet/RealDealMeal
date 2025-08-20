@@ -23,63 +23,12 @@ struct MealDetailView: View {
 				.clipShape(RoundedRectangle(cornerRadius: 12))
 				.shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
 				
-				HStack {
-					Text(meal.strMeal)
-						.font(.largeTitle)
-						.fontWeight(.bold)
-					Spacer()
-					Button {
-						favoritesVM.toggleFavorite(meal)
-					} label: {
-						Image(systemName: favoritesVM.isFavorite(meal) ? "heart.fill" : "heart")
-							.foregroundColor(.red)
-							.font(.title2)
-					}
-					Button {
-					} label: {
-						Image(systemName: "square.and.arrow.up")
-						//	.foregroundColor(.tint)
-							.font(.title2)
-					}
-				}
+				titleAndButtons
 				
 				VStack(alignment: .leading) {
-					VStack(alignment: .leading, spacing: 8) {
-						Text("Ingredients")
-							.font(.title)
-							.fontWeight(.semibold)
-							.underline()
-						LazyVStack(alignment: .leading, spacing: 4) {
-							ForEach(meal.ingredients, id: \.ingredient) { item in
-								HStack(alignment: .top, spacing: 6) {
-									Text("•")
-									Text(item.measure).bold() + Text(" \(item.ingredient)")
-								}
-							}
-						}
-						.padding(.vertical)
-					}
-					
+					ingredients
 					Divider()
-					
-					if !meal.instructionSteps.isEmpty {
-						
-						VStack(alignment: .leading, spacing: 8) {
-							Text("Instructions")
-								.font(.title)
-								.fontWeight(.semibold)
-								.underline()
-							ForEach(Array(meal.instructionSteps.enumerated()), id: \.offset) { index, step in
-								HStack(alignment: .top, spacing: 6) {
-									Text("Step \(index + 1).")
-										.bold()
-									Text(step)
-										.font(.body)
-										.multilineTextAlignment(.leading)
-								}
-							}
-						}
-					}
+					instructions
 				}
 				.padding()
 				.background(Color(.systemBackground))
@@ -96,5 +45,64 @@ struct MealDetailView: View {
 		}
 		.navigationTitle(meal.strMeal)
 		.navigationBarTitleDisplayMode(.inline)
+	}
+	
+	private var titleAndButtons: some View {
+		HStack {
+			Text(meal.strMeal)
+				.font(.largeTitle)
+				.fontWeight(.bold)
+			Spacer()
+			Button {
+				favoritesVM.toggleFavorite(meal)
+			} label: {
+				Image(systemName: favoritesVM.isFavorite(meal) ? "heart.fill" : "heart")
+					.foregroundColor(.red)
+					.font(.title2)
+			}
+			Button {
+			} label: {
+				Image(systemName: "square.and.arrow.up")
+					.font(.title2)
+			}
+		}
+		
+	}
+	
+	private var ingredients: some View {
+		VStack(alignment: .leading, spacing: 8) {
+			Text("Ingredients")
+				.font(.title)
+				.fontWeight(.semibold)
+				.underline()
+			LazyVStack(alignment: .leading, spacing: 4) {
+				ForEach(meal.ingredients, id: \.ingredient) { item in
+					HStack(alignment: .top, spacing: 6) {
+						Text("•")
+						Text(item.measure).bold() + Text(" \(item.ingredient)")
+					}
+				}
+			}
+			.padding(.vertical)
+		}
+	}
+	
+	private var instructions: some View {
+		VStack(alignment: .leading, spacing: 8) {
+			Text("Instructions")
+				.font(.title)
+				.fontWeight(.semibold)
+				.underline()
+			ForEach(Array(meal.instructionSteps.enumerated()), id: \.offset) { index, step in
+				HStack(alignment: .top, spacing: 6) {
+					Text("Step \(index + 1).")
+						.bold()
+					Text(step)
+						.font(.body)
+						.multilineTextAlignment(.leading)
+				}
+			}
+			.padding(.vertical)
+		}
 	}
 }
