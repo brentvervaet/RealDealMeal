@@ -129,26 +129,22 @@ struct MealListView: View {
 				Color.gray.opacity(0.3)
 			}
 			.frame(width: 80, height: 80)
-			.clipShape(RoundedRectangle(cornerRadius: Style.cornerRadius))
+			.clipShape(RoundedRectangle(cornerRadius: 12))
 			
 			Text(meal.strMeal)
 				.font(.headline)
 				.foregroundColor(.primary)
 			
 			Spacer()
-			
 			Image(systemName: "chevron.right")
 				.foregroundColor(.gray)
 				.font(.system(size: 14, weight: .semibold))
 		}
 		.padding()
-		.background(Color(.systemBackground))
-		.cornerRadius(Style.cornerRadius)
-		.overlay(
-			RoundedRectangle(cornerRadius: Style.cornerRadius)
-				.stroke(Color.gray.opacity(0.1))
-		)
-		.shadow(color: Color.black.opacity(0.1), radius: Style.shadowRadius, x: 0, y: 2)
+		.background(.ultraThinMaterial)
+		.cornerRadius(12)
+		.shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 4)
+		
 	}
 	
 	// MARK: - Style Constants

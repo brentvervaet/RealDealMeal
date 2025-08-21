@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-//
-//  MealDetailView.swift
-//  RealDealMeal
-//
-//  Created by Brent Vervaet on 15/08/2025.
-//
-
-import SwiftUI
-
 /// Displays detailed information about a meal, including image, title, ingredients, and instructions.
 struct MealDetailView: View {
 	// MARK: - Typealiases
@@ -51,6 +42,7 @@ struct MealDetailView: View {
 			Color.gray.opacity(0.3)
 		}
 		.clipShape(RoundedRectangle(cornerRadius: 12))
+		.background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
 		.shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
 	}
 
@@ -62,7 +54,7 @@ struct MealDetailView: View {
 				.fontWeight(.bold)
 			Spacer()
 			favoriteButton
-			//shareButton
+			shareButton
 		}
 	}
 
@@ -80,7 +72,7 @@ struct MealDetailView: View {
 	}
 
 	/// The share button.
-	/*private var shareButton: some View {
+	private var shareButton: some View {
 		Button {
 			guard let url = URL(string: meal.strMealThumb ?? "") else { return }
 			let activityItems: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)", url]
@@ -93,7 +85,7 @@ struct MealDetailView: View {
 			Image(systemName: "square.and.arrow.up")
 				.font(.title2)
 		}
-	}*/
+	}
 
 	/// The main detail card showing ingredients and instructions.
 	private var detailCard: some View {
@@ -113,8 +105,8 @@ struct MealDetailView: View {
 			}
 		}
 		.padding()
-		.background(Color(.systemBackground))
 		.clipShape(RoundedRectangle(cornerRadius: 12))
+		.background(.ultraThinMaterial)
 		.overlay(
 			RoundedRectangle(cornerRadius: 12)
 				.stroke(.gray.opacity(0.1))

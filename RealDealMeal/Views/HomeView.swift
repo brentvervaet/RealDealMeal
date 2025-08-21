@@ -92,12 +92,13 @@ struct HomeView: View {
 				.font(.headline)
 				.frame(maxWidth: .infinity)
 				.padding()
-				.background(Color.accentColor)
-				.foregroundColor(.white)
-				.cornerRadius(10)
+				.background(.ultraThinMaterial)
+				.cornerRadius(12)
+				.shadow(color: Color.black.opacity(0.15), radius: 10, x: 0, y: 5)
 				.padding(.horizontal)
 		}
 	}
+	
 }
 
 struct MealCard: View {
@@ -122,6 +123,10 @@ struct MealCard: View {
 				.multilineTextAlignment(.center)
 				.padding(.top, 4)
 		}
+		.padding(8)
+		.background(.ultraThinMaterial)
+		.cornerRadius(20)
+		.shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
 	}
 }
 

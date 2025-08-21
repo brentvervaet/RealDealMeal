@@ -41,24 +41,18 @@ struct FavoritesView: View {
 										.font(.system(size: 14, weight: .semibold))
 								}
 								.padding()
-								.background(Color(.systemBackground))
+								.background(.ultraThinMaterial)
 								.cornerRadius(12)
-								.overlay(
-									RoundedRectangle(
-										cornerRadius: 12,
-									)
-									.stroke(.gray.opacity(0.1))
-								)
-								.shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+								.shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 4)
+								
 							}
+							.padding(.horizontal)
 						}
 					}
-					.padding()
+					.padding(.vertical)
 				}
 				.navigationTitle("Favorites")
 			}
 		}
 	}
 }
-
-
