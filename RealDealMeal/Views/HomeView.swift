@@ -119,7 +119,6 @@ struct MealCard: View {
 			}
 			Text(meal.strMeal)
 				.font(.caption)
-				.foregroundColor(.primary)
 				.multilineTextAlignment(.center)
 				.padding(.top, 4)
 		}
