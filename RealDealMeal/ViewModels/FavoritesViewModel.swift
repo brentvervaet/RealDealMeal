@@ -36,15 +36,14 @@ final class FavoritesViewModel: ObservableObject {
 		favorites.contains { $0.idMeal == meal.idMeal }
 	}
 
-	/// Toggles the favorite status for a meal. If adding, fetches full meal details if needed.
+	/// Toggles the favorite status for a meal. If adding, adds the full meal directly.
 	/// - Parameter meal: The meal to add or remove from favorites.
 	@MainActor
 	func toggleFavorite(_ meal: Meal) async {
 		if isFavorite(meal) {
 			removeFavorite(meal)
 		} else {
-			let fullMeal = await fetchFullMealIfNeeded(for: meal)
-			addFavorite(fullMeal)
+			addFavorite(meal)
 		}
 		saveFavorites()
 	}
@@ -77,14 +76,5 @@ final class FavoritesViewModel: ObservableObject {
 	/// - Parameter meal: The meal to add.
 	private func addFavorite(_ meal: Meal) {
 		favorites.append(meal)
-	}
-
-	/// Fetches the full meal details if the meal is incomplete.
-	/// - Parameter meal: The meal to check/fetch.
-	/// - Returns: A complete Meal object.
-	private func fetchFullMealIfNeeded(for meal: Meal) async -> Meal {
-		// Placeholder: Replace with actual fetch logic if needed.
-		// Example: If meal.details == nil { await fetchMealDetails(meal.idMeal) }
-		meal
 	}
 }

@@ -36,6 +36,33 @@ class APIService {
 			.meals
 	}
 	
+	/// Fetch all meals by category, and upgrade them to full meals using lookup.
+	func fetchMealsByCategory(_ category: String) async throws -> [Meal] {
+		// Stap 1: haal de "lichte" meals op
+		guard let url = URL(string: baseURL + "filter.php?c=\(category)") else {
+			throw URLError(.badURL)
+		}
+		let (data, _) = try await URLSession.shared.data(from: url)
+		let response = try decoder.decode(MealResponse.self, from: data)
+		let lightMeals = response.meals ?? []
+		
+		// Stap 2: upgrade elke meal met een detail call
+		var fullMeals: [Meal] = []
+		try await withThrowingTaskGroup(of: Meal?.self) { group in
+			for meal in lightMeals {
+				group.addTask {
+					try await self.fetchMealDetail(id: meal.idMeal)
+				}
+			}
+			for try await result in group {
+				if let meal = result {
+					fullMeals.append(meal)
+				}
+			}
+		}
+		return fullMeals
+	}
+	
 	/// Fetch detailed information for a meal by ID.
 	/// - Parameter id: Meal identifier.
 	/// - Returns: Optional `Meal` object.
