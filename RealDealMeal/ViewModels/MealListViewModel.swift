@@ -50,17 +50,18 @@ class MealListViewModel: ObservableObject {
 		}
 	}
 	
-	/// Fetches meals for the specified category.
-	/// - Parameter category: The meal category to filter by.
-	func fetchMealsByCategory(_ category: Category) async {
-		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/filter.php?c=\(category.strCategory)") else { return }
+	/// Fetches full meals for the specified category using APIService.
+	func loadMealsByCategory(_ category: Category) async {
+		isLoading = true
+		errorMessage = nil
+		defer { isLoading = false }
 		
 		do {
-			let (data, _) = try await URLSession.shared.data(from: url)
-			let response = try JSONDecoder().decode(MealResponse.self, from: data)
-			meals = response.meals ?? []
+			let fullMeals = try await APIService.shared.fetchMealsByCategory(category.strCategory)
+			meals = fullMeals
 		} catch {
-			print("Error fetching meals by category: \(error)")
+			errorMessage = "Error fetching meals by category: \(error.localizedDescription)"
+			print(error)
 		}
 	}
 }

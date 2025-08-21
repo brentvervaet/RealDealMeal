@@ -36,6 +36,8 @@ struct MealListView: View {
 			TextField("Search meals...", text: $mealListVM.searchQuery)
 				.submitLabel(.search)
 				.onSubmit {
+					// Reset selectedCategory when performing a search
+					mealListVM.selectedCategory = nil
 					Task { await mealListVM.searchMeals() }
 				}
 				.padding(10)
@@ -65,7 +67,9 @@ struct MealListView: View {
 	/// Button view for a meal category
 	private func categoryButton(for category: Category) -> some View {
 		Button {
-			Task { await mealListVM.fetchMealsByCategory(category) }
+			// When a category is selected, clear the search query and set the category
+			mealListVM.searchQuery = ""
+			Task { await mealListVM.loadMealsByCategory(category) }
 			mealListVM.selectedCategory = category
 		} label: {
 			Text(category.strCategory)

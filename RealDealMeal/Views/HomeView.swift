@@ -16,10 +16,23 @@ struct HomeView: View {
 	var body: some View {
 		NavigationStack {
 			VStack(alignment: .leading, spacing: 8) {
-				Text("Recommendations")
-					.font(.title2)
-					.bold()
-					.padding()
+				HStack {
+					Text("Recommendations")
+						.font(.title2)
+						.bold()
+					//Spacer()
+					Button(action: {
+						Task {
+							await homeVM.loadRecommendedMeals()
+						}
+					}) {
+						Image(systemName: "arrow.clockwise")
+							.imageScale(.medium)
+							.padding(.trailing, 4)
+					}
+					.accessibilityLabel("Refresh Recommendations")
+				}
+				.padding()
 				
 				mealGrid
 					.padding(.horizontal)
@@ -34,8 +47,12 @@ struct HomeView: View {
 					MealDetailWrapperView(mealID: mealID)
 				}
 			}
-			.task {
-				await homeVM.loadRecommendedMeals()
+			.onAppear {
+				if homeVM.recommendedMeals.isEmpty {
+					Task {
+						await homeVM.loadRecommendedMeals()
+					}
+				}
 			}
 			.background(Color(.systemBackground))
 			.navigationTitle("Home")
@@ -102,6 +119,7 @@ struct MealCard: View {
 			}
 			Text(meal.strMeal)
 				.font(.caption)
+				.foregroundColor(.primary)
 				.multilineTextAlignment(.center)
 				.padding(.top, 4)
 		}
