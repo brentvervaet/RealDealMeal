@@ -32,8 +32,8 @@ class MealListViewModel: ObservableObject {
 	
 	func loadCategories() async {
 		do {
-			let cats = try await APIService.shared.fetchCategories()
-			categories = cats
+			let catg = try await APIService.shared.fetchCategories()
+			categories = catg
 		} catch {
 			print("Error fetching categories: \(error)")
 		}

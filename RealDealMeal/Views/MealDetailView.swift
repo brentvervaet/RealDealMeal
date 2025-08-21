@@ -78,6 +78,15 @@ struct MealDetailView: View {
 					.font(.title2)
 			}
 			Button {
+				guard let url = URL(string: meal.strMealThumb) else { return }
+				let activityItems: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)", url]
+				let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+				
+				// Find the topmost view controller to present the sheet
+				if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+				   let rootVC = windowScene.windows.first?.rootViewController {
+					rootVC.present(activityVC, animated: true)
+				}
 			} label: {
 				Image(systemName: "square.and.arrow.up")
 					.font(.title2)
