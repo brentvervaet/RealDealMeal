@@ -9,35 +9,58 @@ import Foundation
 
 @MainActor
 class HomeViewModel: ObservableObject {
-	@Published var recommendedMeals: [Meal] = []
-	@Published var isLoading: Bool = false
-	@Published var errorMessage: String? = nil
+	
+	// MARK: - Typealiases
+	typealias Meals = [Meal]
+	
+	// MARK: - Published Properties
+	@Published var recommendedMeals: Meals = []
+	@Published var isLoading = false
+	@Published var errorMessage: String?
 	@Published var randomMeal: Meal?
 	
+	// MARK: - Constants
+	private let recommendedMealCount = 4
+	
+	// MARK: - Public Functions
+	
+	/// Loads recommended meals asynchronously and updates the published properties accordingly.
 	func loadRecommendedMeals() async {
 		isLoading = true
 		defer { isLoading = false }
+		
 		do {
-			var meals: [Meal] = []
-			for _ in 0..<4 {
-				if let randomMeal = try await APIService.shared.fetchRandomMeal() {
-					meals.append(randomMeal)
-				}
-			}
-			recommendedMeals = meals
+			recommendedMeals = try await fetchMultipleRandomMeals(count: recommendedMealCount)
 			errorMessage = nil
 		} catch {
 			errorMessage = "Failed to load daily meals: \(error.localizedDescription)"
 		}
 	}
 	
+	/// Loads a single random meal asynchronously.
+	/// - Returns: An optional `Meal` if fetching succeeds; otherwise, nil.
 	func loadRandomMeal() async -> Meal? {
 		do {
-			let meal = try await APIService.shared.fetchRandomMeal()
-			return meal
+			return try await APIService.shared.fetchRandomMeal()
 		} catch {
 			print("Failed to fetch random meal: \(error)")
 			return nil
 		}
+	}
+	
+	// MARK: - Private Functions
+	
+	/// Fetches a specified number of random meals asynchronously.
+	/// - Parameter count: The number of random meals to fetch.
+	/// - Throws: Propagates any error thrown by the API service.
+	/// - Returns: An array of fetched `Meal` objects.
+	private func fetchMultipleRandomMeals(count: Int) async throws -> Meals {
+		var meals: Meals = []
+		for _ in 0..<count {
+			if let meal = try await APIService.shared.fetchRandomMeal() {
+				meals.append(meal)
+			}
+		}
+		return meals
 	}
 }

@@ -7,12 +7,24 @@
 
 import Foundation
 
+// MARK: - API Response Models
+/// Response wrapper for meal categories from TheMealDB API.
 struct CategoryResponse: Codable {
 	let meals: [MealCategory]
 }
 
+/// Represents a single meal category fetched from TheMealDB API.
 struct MealCategory: Codable, Identifiable, Hashable {
+	// MARK: - API Properties
 	let strCategory: String
 	
+	// MARK: - Identifiable
 	var id: String { strCategory }
+	
+	// MARK: - Computed Properties
+	/// Swift-friendly name of the category.
+	var name: String { strCategory }
 }
+
+// MARK: - Typealiases
+typealias Category = MealCategory

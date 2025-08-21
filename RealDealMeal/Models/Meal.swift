@@ -7,17 +7,22 @@
 
 import Foundation
 
+/// Response from the Meal API with array of meals.
 struct MealResponse: Codable {
 	let meals: [Meal]?
 }
 
+// MARK: - Meal Model
+
+/// A single meal with details, ingredients, and instructions.
 struct Meal: Codable, Identifiable, Hashable {
+	// MARK: API Properties
 	let idMeal: String
 	let strMeal: String
 	let strMealThumb: String
 	let strInstructions: String?
-	
-	// Ingredients and measures from API
+
+	// MARK: Ingredient & Measure Properties
 	let strIngredient1: String?
 	let strIngredient2: String?
 	let strIngredient3: String?
@@ -38,7 +43,7 @@ struct Meal: Codable, Identifiable, Hashable {
 	let strIngredient18: String?
 	let strIngredient19: String?
 	let strIngredient20: String?
-	
+
 	let strMeasure1: String?
 	let strMeasure2: String?
 	let strMeasure3: String?
@@ -59,10 +64,17 @@ struct Meal: Codable, Identifiable, Hashable {
 	let strMeasure18: String?
 	let strMeasure19: String?
 	let strMeasure20: String?
-	
+
+	// MARK: - Computed Properties
+
+	/// The unique identifier for the meal.
 	var id: String { idMeal }
-	
-	var ingredients: [(ingredient: String, measure: String)] {
+
+	/// A tuple representing an ingredient and its measure.
+	typealias Ingredient = (ingredient: String, measure: String)
+
+	/// All non-empty ingredients and their measures for this meal.
+	var ingredients: [Ingredient] {
 		let ingredientList = [
 			strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5,
 			strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10,
@@ -75,21 +87,23 @@ struct Meal: Codable, Identifiable, Hashable {
 			strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15,
 			strMeasure16, strMeasure17, strMeasure18, strMeasure19, strMeasure20
 		]
-		
-		var result: [(String, String)] = []
+
+		var result: [Ingredient] = []
 		for (ingredient, measure) in zip(ingredientList, measureList) {
-			if let ingredient = ingredient, !ingredient.trimmingCharacters(in: .whitespaces).isEmpty {
+			if let ingredient = ingredient,
+			   !ingredient.trimmingCharacters(in: .whitespaces).isEmpty {
 				let measureText = measure?.trimmingCharacters(in: .whitespaces) ?? ""
 				result.append((ingredient, measureText))
 			}
 		}
 		return result
 	}
-	
+
+	/// Steps of instructions split by newlines
 	var instructionSteps: [String] {
 		guard let strInstructions = strInstructions else { return [] }
 		return strInstructions
-			.components(separatedBy: CharacterSet.newlines)
+			.components(separatedBy: .newlines)
 			.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
 			.filter { !$0.isEmpty }
 	}

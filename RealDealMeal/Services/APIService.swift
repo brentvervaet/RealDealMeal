@@ -8,44 +8,61 @@
 import Foundation
 
 class APIService {
+	// MARK: - Typealiases
+	typealias MealResult = [Meal]
+	typealias CategoryResult = [MealCategory]
+	
+	// MARK: - Properties
 	static let shared = APIService()
 	private init() {}
 	
-	func fetchMeals(query: String) async throws -> [Meal] {
-		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/search.php?s=\(query)") else {
-			throw URLError(.badURL)
-		}
-		
-		let (data, _) = try await URLSession.shared.data(from: url)
-		let response = try JSONDecoder().decode(MealResponse.self, from: data)
-		return response.meals ?? []
+	private let baseURL = "https://www.themealdb.com/api/json/v1/1/"
+	private let decoder = JSONDecoder()
+	
+	// MARK: - Methods
+	
+	/// Fetch meals matching the query string.
+	/// - Parameter query: Search query string.
+	/// - Returns: Array of `Meal` objects.
+	func fetchMeals(query: String) async throws -> MealResult {
+		try await fetch(endpoint: "search.php?s=\(query)", decodeTo: MealResponse.self)
+			.meals ?? []
 	}
 	
-	func fetchCategories() async throws -> [MealCategory] {
-		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/list.php?c=list") else {
-			throw URLError(.badURL)
-		}
-		
-		let (data, _) = try await URLSession.shared.data(from: url)
-		let response = try JSONDecoder().decode(CategoryResponse.self, from: data)
-		return response.meals
+	/// Fetch all meal categories.
+	/// - Returns: Array of `MealCategory` objects.
+	func fetchCategories() async throws -> CategoryResult {
+		try await fetch(endpoint: "list.php?c=list", decodeTo: CategoryResponse.self)
+			.meals
 	}
 	
+	/// Fetch detailed information for a meal by ID.
+	/// - Parameter id: Meal identifier.
+	/// - Returns: Optional `Meal` object.
 	func fetchMealDetail(id: String) async throws -> Meal? {
-		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/lookup.php?i=\(id)") else {
-			return nil
-		}
-		let (data, _) = try await URLSession.shared.data(from: url)
-		let response = try JSONDecoder().decode(MealResponse.self, from: data)
-		return response.meals?.first
+		try await fetch(endpoint: "lookup.php?i=\(id)", decodeTo: MealResponse.self)
+			.meals?.first
 	}
 	
+	/// Fetch a random meal.
+	/// - Returns: Optional `Meal` object.
 	func fetchRandomMeal() async throws -> Meal? {
-		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/random.php") else {
-			return nil
+		try await fetch(endpoint: "random.php", decodeTo: MealResponse.self)
+			.meals?.first
+	}
+	
+	// MARK: - Private Helper
+	
+	/// Generic fetch method to retrieve and decode data from API.
+	/// - Parameters:
+	///   - endpoint: API endpoint path.
+	///   - decodeTo: Decodable type to decode response into.
+	/// - Returns: Decoded response object.
+	private func fetch<T: Decodable>(endpoint: String, decodeTo: T.Type) async throws -> T {
+		guard let url = URL(string: baseURL + endpoint) else {
+			throw URLError(.badURL)
 		}
 		let (data, _) = try await URLSession.shared.data(from: url)
-		let response = try JSONDecoder().decode(MealResponse.self, from: data)
-		return response.meals?.first
+		return try decoder.decode(T.self, from: data)
 	}
 }
