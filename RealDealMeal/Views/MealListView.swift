@@ -93,7 +93,15 @@ struct MealListView: View {
 				.foregroundColor(.red)
 				.padding()
 		} else {
-			mealList
+			VStack(alignment: .leading, spacing: 8) {
+				if !mealListVM.meals.isEmpty {
+					Text("\(mealListVM.meals.count) results found")
+						.font(.subheadline)
+						.foregroundColor(.secondary)
+						.padding(.horizontal)
+				}
+				mealList
+			}
 		}
 	}
 	
