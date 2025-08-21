@@ -114,7 +114,7 @@ struct MealListView: View {
 	/// Single row view representing a meal in the list
 	private func mealRow(for meal: Meal) -> some View {
 		HStack(spacing: 16) {
-			AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+			AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
 				image.resizable()
 					.scaledToFill()
 			} placeholder: {

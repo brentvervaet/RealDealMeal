@@ -19,7 +19,7 @@ struct Meal: Codable, Identifiable, Hashable {
 	// MARK: API Properties
 	let idMeal: String
 	let strMeal: String
-	let strMealThumb: String
+	let strMealThumb: String?
 	let strInstructions: String?
 
 	// MARK: Ingredient & Measure Properties

@@ -44,7 +44,7 @@ struct MealDetailView: View {
 
 	/// The meal image with styling.
 	private var mealImage: some View {
-		AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+		AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
 			image.resizable()
 				.scaledToFit()
 		} placeholder: {
@@ -62,7 +62,7 @@ struct MealDetailView: View {
 				.fontWeight(.bold)
 			Spacer()
 			favoriteButton
-			shareButton
+			//shareButton
 		}
 	}
 
@@ -80,9 +80,9 @@ struct MealDetailView: View {
 	}
 
 	/// The share button.
-	private var shareButton: some View {
+	/*private var shareButton: some View {
 		Button {
-			guard let url = URL(string: meal.strMealThumb) else { return }
+			guard let url = URL(string: meal.strMealThumb ?? "") else { return }
 			let activityItems: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)", url]
 			let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
 			if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -93,7 +93,7 @@ struct MealDetailView: View {
 			Image(systemName: "square.and.arrow.up")
 				.font(.title2)
 		}
-	}
+	}*/
 
 	/// The main detail card showing ingredients and instructions.
 	private var detailCard: some View {

@@ -105,7 +105,7 @@ struct MealCard: View {
 	
 	var body: some View {
 		VStack {
-			AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+			AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
 				image
 					.resizable()
 					.scaledToFill()

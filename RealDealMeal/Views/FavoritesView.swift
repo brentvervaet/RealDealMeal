@@ -22,7 +22,7 @@ struct FavoritesView: View {
 						ForEach(favoritesVM.favorites) { meal in
 							NavigationLink(destination: MealDetailView(meal: meal)) {
 								HStack(spacing: 16) {
-									AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+									AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
 										image.resizable()
 											.scaledToFill()
 									} placeholder: {
