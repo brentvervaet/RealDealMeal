@@ -12,36 +12,28 @@ struct HomeView: View {
 	
 	var body: some View {
 		NavigationStack {
-			VStack {
-				if homeVM.recommendedMeals.isEmpty {
-					ProgressView("Loading recommended recipes...")
-				} else {
-					LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-						ForEach(homeVM.recommendedMeals) { meal in
-							NavigationLink(destination: MealDetailWrapperView(mealID: meal.idMeal)) {
-								VStack {
-									AsyncImage(url: URL(string: meal.strMealThumb)) { image in
-										image
-											.resizable()
-											.scaledToFill()
-											.frame(width: 150, height: 150)
-											.clipped()
-											.cornerRadius(10)
-									} placeholder: {
-										Color.gray.opacity(0.3)
-											.frame(width: 150, height: 150)
-											.cornerRadius(10)
-									}
-									Text(meal.strMeal)
-										.font(.caption)
-										.multilineTextAlignment(.center)
-										.padding(.top, 4)
-								}
-							}
-						}
+			VStack(alignment: .leading, spacing: 8) {
+				Text("Recommendations")
+					.font(.title2)
+					.bold()
+					.padding(.horizontal)
+				mealGrid
+					.padding(.horizontal)
+				Button(action: {
+					Task {
+						await homeVM.loadRecommendedMeals()
 					}
-					.padding()
+				}) {
+					Text("Random Recipe")
+						.font(.headline)
+						.frame(maxWidth: .infinity)
+						.padding()
+						.background(Color.accentColor)
+						.foregroundColor(.white)
+						.cornerRadius(10)
+						.padding(.horizontal)
 				}
+				.padding(.top, 8)
 			}
 			.task {
 				await homeVM.loadRecommendedMeals()
@@ -49,6 +41,41 @@ struct HomeView: View {
 			.background(Color(.systemBackground))
 			.background(Color(.systemGroupedBackground).ignoresSafeArea())
 			.navigationTitle("Home")
+		}
+	}
+	
+	private var mealGrid: some View {
+		LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+			ForEach(homeVM.recommendedMeals) { meal in
+				NavigationLink(destination: MealDetailWrapperView(mealID: meal.idMeal)) {
+					MealCard(meal: meal)
+				}
+			}
+		}
+	}
+}
+
+struct MealCard: View {
+	let meal: Meal
+	
+	var body: some View {
+		VStack {
+			AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+				image
+					.resizable()
+					.scaledToFill()
+					.frame(width: 150, height: 150)
+					.clipped()
+					.cornerRadius(10)
+			} placeholder: {
+				Color.gray.opacity(0.3)
+					.frame(width: 150, height: 150)
+					.cornerRadius(10)
+			}
+			Text(meal.strMeal)
+				.font(.caption)
+				.multilineTextAlignment(.center)
+				.padding(.top, 4)
 		}
 	}
 }
