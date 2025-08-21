@@ -18,29 +18,15 @@ struct HomeView: View {
 				Text("Recommendations")
 					.font(.title2)
 					.bold()
-					.padding(.horizontal)
+					.padding()
+				
 				mealGrid
 					.padding(.horizontal)
 				
-				Button(action: {
-					Task {
-						if let randomMeal = await homeVM.loadRandomMeal() {
-							randomMealID = randomMeal.idMeal
-							showRandomMealDetail = true
-						}
-					}
-				}) {
-					Text("\(Image(systemName: "sparkles")) Random Recipe \(Image(systemName: "sparkles"))")
-						.font(.headline)
-						.frame(maxWidth: .infinity)
-						.padding()
-						.background(Color.accentColor)
-						.foregroundColor(.white)
-						.cornerRadius(10)
-						.padding(.horizontal)
-					
-				}
-				.padding(.top, 8)
+				Spacer()
+				
+				randomRecipeButton
+					.padding(.bottom)
 			}
 			.navigationDestination(isPresented: $showRandomMealDetail) {
 				if let mealID = randomMealID {
@@ -65,6 +51,26 @@ struct HomeView: View {
 			}
 		}
 	}
+	
+	private var randomRecipeButton: some View {
+		Button(action: {
+			Task {
+				if let randomMeal = await homeVM.loadRandomMeal() {
+					randomMealID = randomMeal.idMeal
+					showRandomMealDetail = true
+				}
+			}
+		}) {
+			Text("\(Image(systemName: "sparkles")) Random Recipe \(Image(systemName: "sparkles"))")
+				.font(.headline)
+				.frame(maxWidth: .infinity)
+				.padding()
+				.background(Color.accentColor)
+				.foregroundColor(.white)
+				.cornerRadius(10)
+				.padding(.horizontal)
+		}
+	}
 }
 
 struct MealCard: View {
@@ -78,11 +84,11 @@ struct MealCard: View {
 					.scaledToFill()
 					.frame(width: 150, height: 150)
 					.clipped()
-					.cornerRadius(10)
+					.cornerRadius(12)
 			} placeholder: {
 				Color.gray.opacity(0.3)
 					.frame(width: 150, height: 150)
-					.cornerRadius(10)
+					.cornerRadius(12)
 			}
 			Text(meal.strMeal)
 				.font(.caption)
