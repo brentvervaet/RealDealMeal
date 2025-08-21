@@ -12,6 +12,7 @@ class HomeViewModel: ObservableObject {
 	@Published var recommendedMeals: [Meal] = []
 	@Published var isLoading: Bool = false
 	@Published var errorMessage: String? = nil
+	@Published var randomMeal: Meal?
 	
 	func loadRecommendedMeals() async {
 		isLoading = true
@@ -27,6 +28,16 @@ class HomeViewModel: ObservableObject {
 			errorMessage = nil
 		} catch {
 			errorMessage = "Failed to load daily meals: \(error.localizedDescription)"
+		}
+	}
+	
+	func loadRandomMeal() async -> Meal? {
+		do {
+			let meal = try await APIService.shared.fetchRandomMeal()
+			return meal
+		} catch {
+			print("Failed to fetch random meal: \(error)")
+			return nil
 		}
 	}
 }

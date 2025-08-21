@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
 	@StateObject private var homeVM = HomeViewModel()
+	@State private var randomMealID: String? = nil
+	@State private var showRandomMealDetail: Bool = false
 	
 	var body: some View {
 		NavigationStack {
@@ -19,12 +21,16 @@ struct HomeView: View {
 					.padding(.horizontal)
 				mealGrid
 					.padding(.horizontal)
+				
 				Button(action: {
 					Task {
-						await homeVM.loadRecommendedMeals()
+						if let randomMeal = await homeVM.loadRandomMeal() {
+							randomMealID = randomMeal.idMeal
+							showRandomMealDetail = true
+						}
 					}
 				}) {
-					Text("Random Recipe")
+					Text("\(Image(systemName: "sparkles")) Random Recipe \(Image(systemName: "sparkles"))")
 						.font(.headline)
 						.frame(maxWidth: .infinity)
 						.padding()
@@ -32,8 +38,14 @@ struct HomeView: View {
 						.foregroundColor(.white)
 						.cornerRadius(10)
 						.padding(.horizontal)
+					
 				}
 				.padding(.top, 8)
+			}
+			.navigationDestination(isPresented: $showRandomMealDetail) {
+				if let mealID = randomMealID {
+					MealDetailWrapperView(mealID: mealID)
+				}
 			}
 			.task {
 				await homeVM.loadRecommendedMeals()
