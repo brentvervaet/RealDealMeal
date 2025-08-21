@@ -8,44 +8,50 @@
 import SwiftUI
 
 struct HomeView: View {
-	//@StateObject private var homeVM = HomeViewModel()
-	@EnvironmentObject var favoritesVM: FavoritesViewModel
+	@StateObject private var homeVM = HomeViewModel()
 	
 	var body: some View {
 		NavigationStack {
-			VStack{
-				Text("home")
+			VStack {
+				if homeVM.recommendedMeals.isEmpty {
+					ProgressView("Loading recommended recipes...")
+				} else {
+					LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+						ForEach(homeVM.recommendedMeals) { meal in
+							NavigationLink(destination: MealDetailWrapperView(mealID: meal.idMeal)) {
+								VStack {
+									AsyncImage(url: URL(string: meal.strMealThumb)) { image in
+										image
+											.resizable()
+											.scaledToFill()
+											.frame(width: 150, height: 150)
+											.clipped()
+											.cornerRadius(10)
+									} placeholder: {
+										Color.gray.opacity(0.3)
+											.frame(width: 150, height: 150)
+											.cornerRadius(10)
+									}
+									Text(meal.strMeal)
+										.font(.caption)
+										.multilineTextAlignment(.center)
+										.padding(.top, 4)
+								}
+							}
+						}
+					}
+					.padding()
+				}
 			}
-			//TODO: daily recipes
+			.task {
+				await homeVM.loadRecommendedMeals()
+			}
 			.background(Color(.systemBackground))
 			.background(Color(.systemGroupedBackground).ignoresSafeArea())
 			.navigationTitle("Home")
 		}
 	}
 }
-
-/* TODO: meal card
- struct DailyMealCard: View {
- let meal: Meal
- 
- var body: some View {
- VStack {
- AsyncImage(url: URL(string: meal.strMealThumb)) { image in
- image.resizable()
- .scaledToFill()
- } placeholder: {
- Color.gray.opacity(0.3)
- }
- .frame(width: 160, height: 100)
- .clipShape(RoundedRectangle(cornerRadius: 10))
- 
- Text(meal.strMeal)
- .font(.headline)
- .lineLimit(2)
- .frame(width: 160, alignment: .leading)
- }
- }
- }*/
 
 #Preview {
 	HomeView()

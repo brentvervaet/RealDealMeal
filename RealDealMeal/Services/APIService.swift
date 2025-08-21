@@ -39,4 +39,13 @@ class APIService {
 		let response = try JSONDecoder().decode(MealResponse.self, from: data)
 		return response.meals?.first
 	}
+	
+	func fetchRandomMeal() async throws -> Meal? {
+		guard let url = URL(string: "https://www.themealdb.com/api/json/v1/1/random.php") else {
+			return nil
+		}
+		let (data, _) = try await URLSession.shared.data(from: url)
+		let response = try JSONDecoder().decode(MealResponse.self, from: data)
+		return response.meals?.first
+	}
 }

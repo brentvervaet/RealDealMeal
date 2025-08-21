@@ -16,6 +16,7 @@
 		ABD96FD62E54BE630037DCA4 /* MealListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */; };
 		ABD96FDA2E54BE920037DCA4 /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FD92E54BE920037DCA4 /* MealDetailView.swift */; };
 		ABD96FDC2E54BF1F0037DCA4 /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD96FDB2E54BF1F0037DCA4 /* MealListView.swift */; };
+		ABFBA6E02E571C3A007BD318 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFBA6DF2E571C3A007BD318 /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListViewModel.swift; sourceTree = "<group>"; };
 		ABD96FD92E54BE920037DCA4 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		ABD96FDB2E54BF1F0037DCA4 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
+		ABFBA6DF2E571C3A007BD318 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -92,6 +94,7 @@
 			children = (
 				ABD96FD52E54BE630037DCA4 /* MealListViewModel.swift */,
 				AB2385642E55EAF0005A246D /* FavoritesViewModel.swift */,
+				ABFBA6DF2E571C3A007BD318 /* HomeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB2385692E55FC8D005A246D /* HomeView.swift in Sources */,
+				ABFBA6E02E571C3A007BD318 /* HomeViewModel.swift in Sources */,
 				AB2385652E55EAF0005A246D /* FavoritesViewModel.swift in Sources */,
 				ABD96FD22E54BE160037DCA4 /* Meal.swift in Sources */,
 				ABD96FD42E54BE370037DCA4 /* APIService.swift in Sources */,
