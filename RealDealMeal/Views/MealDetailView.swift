@@ -102,8 +102,9 @@ struct MealDetailView: View {
 				.fontWeight(.semibold)
 				.underline()
 			LazyVStack(alignment: .leading, spacing: 4) {
-				ForEach(meal.ingredients, id: \.ingredient) { item in
-					HStack(alignment: .top, spacing: 6) {
+				ForEach(meal.ingredients.indices, id: \.self) { index in
+					let item = meal.ingredients[index]
+					HStack {
 						Text("•")
 						Text(item.measure).bold() + Text(" \(item.ingredient)")
 					}
