@@ -5,8 +5,6 @@
 //  Created by Brent Vervaet on 12/08/2025.
 //
 
-//TODO: add categories underneath the search bar, then give a list of those meals (kindof a filter)
-
 import SwiftUI
 
 struct MealListView: View {
@@ -51,13 +49,13 @@ struct MealListView: View {
 	
 	/// Horizontally scrollable list of categories as selectable buttons
 	private var categoryList: some View {
-		ScrollView(.horizontal, showsIndicators: false) {
+		ScrollView(.horizontal, showsIndicators: false ) {
 			HStack(spacing: 12) {
 				ForEach(mealListVM.categories) { category in
 					categoryButton(for: category)
 				}
 			}
-			.padding(.horizontal)
+			.padding()
 			.onAppear {
 				Task { await mealListVM.loadCategories() }
 			}
