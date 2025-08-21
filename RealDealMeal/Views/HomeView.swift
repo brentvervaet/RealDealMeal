@@ -37,7 +37,6 @@ struct HomeView: View {
 				await homeVM.loadRecommendedMeals()
 			}
 			.background(Color(.systemBackground))
-			.background(Color(.systemGroupedBackground).ignoresSafeArea())
 			.navigationTitle("Home")
 		}
 	}
