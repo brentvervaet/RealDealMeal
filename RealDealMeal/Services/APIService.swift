@@ -48,16 +48,9 @@ class APIService {
 		
 		// Stap 2: upgrade elke meal met een detail call
 		var fullMeals: [Meal] = []
-		try await withThrowingTaskGroup(of: Meal?.self) { group in
-			for meal in lightMeals {
-				group.addTask {
-					try await self.fetchMealDetail(id: meal.idMeal)
-				}
-			}
-			for try await result in group {
-				if let meal = result {
-					fullMeals.append(meal)
-				}
+		for meal in lightMeals {
+			if let fullMeal = try await fetchMealDetail(id: meal.idMeal) {
+				fullMeals.append(fullMeal)
 			}
 		}
 		return fullMeals
