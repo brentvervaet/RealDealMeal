@@ -11,6 +11,7 @@ struct HomeView: View {
 	@StateObject private var homeVM = HomeViewModel()
 	@State private var randomMealID: String? = nil
 	@State private var showRandomMealDetail: Bool = false
+	@State private var showInfo: Bool = false
 	
 	var body: some View {
 		NavigationStack {
@@ -38,6 +39,16 @@ struct HomeView: View {
 			}
 			.background(Color(.systemBackground))
 			.navigationTitle("Home")
+			.toolbar {
+				Button {
+					showInfo = true
+				} label: {
+					Image(systemName: "info.circle")
+				}
+			}
+			.sheet(isPresented: $showInfo) {
+				InfoView()
+			}
 		}
 	}
 	
