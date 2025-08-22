@@ -46,14 +46,7 @@ class APIService {
 		let response = try decoder.decode(MealResponse.self, from: data)
 		let lightMeals = response.meals ?? []
 		
-		// Stap 2: upgrade elke meal met een detail call
-		var fullMeals: [Meal] = []
-		for meal in lightMeals {
-			if let fullMeal = try await fetchMealDetail(id: meal.idMeal) {
-				fullMeals.append(fullMeal)
-			}
-		}
-		return fullMeals
+		return lightMeals
 	}
 	
 	/// Fetch detailed information for a meal by ID.
