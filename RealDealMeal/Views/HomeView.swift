@@ -101,7 +101,7 @@ struct HomeView: View {
 		} label: {
 			Text("\(Image(systemName: "sparkles")) Random Recipe \(Image(systemName: "sparkles"))")
 				.font(.headline)
-				.frame(maxWidth: 400)
+				.frame(maxWidth: 500)
 				.padding()
 				.background(.ultraThinMaterial)
 				.cornerRadius(12)

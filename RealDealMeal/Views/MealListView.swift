@@ -45,6 +45,7 @@ struct MealListView: View {
 		}
 		.padding(.horizontal)
 		.padding(.top)
+		.frame(maxWidth: 400)
 	}
 	
 	/// Horizontally scrollable list of categories as selectable buttons
@@ -141,6 +142,7 @@ struct MealListView: View {
 				.font(.system(size: 14, weight: .semibold))
 		}
 		.padding()
+		.frame(maxWidth: 700)
 		.background(.ultraThinMaterial)
 		.cornerRadius(12)
 		.shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 4)
