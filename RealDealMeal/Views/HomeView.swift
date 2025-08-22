@@ -15,7 +15,9 @@ struct HomeView: View {
 	
 	var body: some View {
 		NavigationStack {
+			
 			GeometryReader { bounds in
+				
 				ScrollView {
 					VStack(alignment: .leading, spacing: 16) {
 						
@@ -32,6 +34,11 @@ struct HomeView: View {
 						}
 						.padding(.horizontal)
 						
+						randomRecipeButton
+							.padding(.horizontal)
+			
+						
+						
 						// Adaptive grid based on screen width
 						let columns = adaptiveColumns(for: bounds.size.width)
 						
@@ -45,8 +52,6 @@ struct HomeView: View {
 						}
 						.padding(.horizontal)
 						
-						randomRecipeButton
-							.padding(.horizontal)
 					}
 					.padding(.vertical)
 				}
@@ -96,11 +101,12 @@ struct HomeView: View {
 		} label: {
 			Text("\(Image(systemName: "sparkles")) Random Recipe \(Image(systemName: "sparkles"))")
 				.font(.headline)
-				.frame(maxWidth: .infinity)
+				.frame(maxWidth: 400)
 				.padding()
 				.background(.ultraThinMaterial)
 				.cornerRadius(12)
 				.shadow(color: Color.black.opacity(0.15), radius: 10, x: 0, y: 5)
+				.frame(maxWidth: .infinity)
 		}
 	}
 }
@@ -113,12 +119,12 @@ struct MealCard: View {
 				image
 					.resizable()
 					.scaledToFill()
-					.frame(width: 150, height: 150)
+					.frame(maxWidth: 350, maxHeight: 350)
 					.clipped()
 					.cornerRadius(12)
 			} placeholder: {
 				Color.gray.opacity(0.3)
-					.frame(width: 150, height: 150)
+					.frame(maxWidth: 350, maxHeight: 350)
 					.cornerRadius(12)
 			}
 			Text(meal.strMeal)
@@ -126,6 +132,7 @@ struct MealCard: View {
 				.multilineTextAlignment(.center)
 				.padding(.top, 4)
 		}
+		.frame(maxWidth: .infinity)
 		.padding(8)
 		.background(.ultraThinMaterial)
 		.cornerRadius(20)
