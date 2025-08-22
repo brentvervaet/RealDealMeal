@@ -56,9 +56,11 @@ class HomeViewModel: ObservableObject {
 	/// - Returns: An array of fetched `Meal` objects.
 	private func fetchMultipleRandomMeals(count: Int) async throws -> Meals {
 		var meals: Meals = []
-		for _ in 0..<count {
+		while meals.count < count {
 			if let meal = try await APIService.shared.fetchRandomMeal() {
-				meals.append(meal)
+				if !meals.contains(where: { $0.idMeal == meal.idMeal }) {
+					meals.append(meal)
+				}
 			}
 		}
 		return meals
