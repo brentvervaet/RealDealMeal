@@ -21,15 +21,21 @@ struct FavoritesView: View {
 					LazyVStack(spacing: 12) {
 						ForEach(favoritesVM.favorites) { meal in
 							NavigationLink(destination: MealDetailView(meal: meal)) {
-								HStack(spacing: 16) {
+								HStack(spacing: Constants.Grid.spacing) {
 									AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
 										image.resizable()
 											.scaledToFill()
 									} placeholder: {
-										Color.gray.opacity(0.3)
+										Color.gray
+											.opacity(
+												Constants.Placeholder.opacity
+											)
 									}
-									.frame(width: 80, height: 80)
-									.clipShape(RoundedRectangle(cornerRadius: 12))
+									.frame(
+										width: Constants.Row.W,
+										height: Constants.Row.H
+									)
+									.clipShape(RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusS))
 									
 									Text(meal.strMeal)
 										.font(.headline)
@@ -42,8 +48,16 @@ struct FavoritesView: View {
 								}
 								.padding()
 								.background(.ultraThinMaterial)
-								.cornerRadius(12)
-								.shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 4)
+								.cornerRadius(Constants.Corner.cornerRadiusM)
+								.shadow(
+									color: Color.black
+										.opacity(
+											Constants.Shadow.shadowOpacity
+										),
+									radius: Constants.Shadow.shadowRadius,
+									x: Constants.Shadow.shadowX,
+									y: Constants.Shadow.shadowY
+								)
 								
 							}
 							.padding(.horizontal)
@@ -54,5 +68,39 @@ struct FavoritesView: View {
 				.navigationTitle("Favorites")
 			}
 		}
+	}
+	
+	// MARK: - Style Constants
+	
+	private struct Constants {
+		
+		struct Corner {
+			static let cornerRadiusS: CGFloat = 12
+			static let cornerRadiusM: CGFloat = 16
+			static let cornerRadiusL: CGFloat = 24
+		}
+		
+		struct Shadow {
+			static let shadowOpacity: CGFloat = 0.15
+			static let shadowRadius: CGFloat = 10
+			static let shadowX: CGFloat = 0
+			static let shadowY: CGFloat = 5
+		}
+		
+		struct Row {
+			static let W: CGFloat = 100
+			static let H: CGFloat = 100
+		}
+		
+		struct Placeholder {
+			static let opacity: CGFloat = 0.3
+			static let maxW: CGFloat = 350
+			static let maxH: CGFloat = 350
+		}
+		
+		struct Grid {
+			static let spacing: CGFloat = 16
+		}
+		
 	}
 }

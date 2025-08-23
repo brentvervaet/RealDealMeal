@@ -124,7 +124,7 @@ struct MealCard: View {
 				image
 					.resizable()
 					.scaledToFill()
-					.frame(maxWidth: Constants.MealCard.maxW, maxHeight: Constants.MealCard.maxH)
+					.frame(maxWidth: Constants.Card.maxW, maxHeight: Constants.Card.maxH)
 					.clipped()
 					.cornerRadius(Constants.Corner.cornerRadiusM)
 			} placeholder: {
@@ -141,7 +141,7 @@ struct MealCard: View {
 				.padding(.top, 4)
 		}
 		.frame(maxWidth: .infinity)
-		.padding(Constants.MealCard.inset)
+		.padding(Constants.Card.inset)
 		.background(.ultraThinMaterial)
 		.cornerRadius(Constants.Corner.cornerRadiusM)
 		.shadow(
@@ -174,7 +174,7 @@ private struct Constants {
 		static let maxWidth: CGFloat = 500
 	}
 	
-	struct MealCard {
+	struct Card {
 		static let inset: CGFloat = 12
 		static let maxW: CGFloat = 350
 		static let maxH: CGFloat = 350

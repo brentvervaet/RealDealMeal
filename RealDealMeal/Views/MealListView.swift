@@ -205,11 +205,32 @@ private struct Constants {
 	}
 	
 	struct Shadow {
-		static let shadowOpacity: CGFloat = 0.1
-		static let shadowRadius: CGFloat = 5
+		static let shadowOpacity: CGFloat = 0.15
+		static let shadowRadius: CGFloat = 10
 		static let shadowX: CGFloat = 0
-		static let shadowY: CGFloat = 2
+		static let shadowY: CGFloat = 5
 	}
+	
+	struct Button {
+		static let maxWidth: CGFloat = 500
+	}
+	
+	struct MealCard {
+		static let inset: CGFloat = 12
+		static let maxW: CGFloat = 350
+		static let maxH: CGFloat = 350
+	}
+	
+	struct Placeholder {
+		static let opacity: CGFloat = 0.3
+		static let maxW: CGFloat = 350
+		static let maxH: CGFloat = 350
+	}
+	
+	struct Grid {
+		static let spacing: CGFloat = 16
+	}
+	
 }
 
 // MARK: - Preview
