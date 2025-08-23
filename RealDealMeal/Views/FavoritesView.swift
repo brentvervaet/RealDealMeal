@@ -47,7 +47,7 @@ struct FavoritesView: View {
 										.font(.system(size: 14, weight: .semibold))
 								}
 								.padding()
-								.background(.ultraThinMaterial)
+								.background(.white)
 								.cornerRadius(Constants.Corner.cornerRadiusM)
 								.shadow(
 									color: Color.black
@@ -69,6 +69,7 @@ struct FavoritesView: View {
 			}
 		}
 	}
+
 }
 
 // MARK: - Style Constants

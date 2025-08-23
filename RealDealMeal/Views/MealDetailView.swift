@@ -131,7 +131,7 @@ struct MealDetailView: View {
 			}
 		}
 		.padding()
-		.background(.ultraThinMaterial)
+		.background(Color(.systemBackground))
 		.clipShape(RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusM))
 		.shadow(
 			color: Color.black.opacity(Constants.Shadow.shadowOpacity),

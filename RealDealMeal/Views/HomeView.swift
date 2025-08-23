@@ -103,7 +103,7 @@ struct HomeView: View {
 				.font(.headline)
 				.frame(maxWidth: Constants.Button.maxWidth)
 				.padding()
-				.background(.ultraThinMaterial)
+				.background(Color(.systemBackground))
 				.cornerRadius(Constants.Corner.cornerRadiusS)
 				.cornerRadius(Constants.Corner.cornerRadiusM)
 				.shadow(
@@ -142,7 +142,7 @@ struct MealCard: View {
 		}
 		.frame(maxWidth: .infinity)
 		.padding(Constants.Card.inset)
-		.background(.ultraThinMaterial)
+		.background(.white)
 		.cornerRadius(Constants.Corner.cornerRadiusM)
 		.shadow(
 			color: Color.black.opacity(Constants.Shadow.shadowOpacity),

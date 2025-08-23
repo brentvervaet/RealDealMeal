@@ -149,7 +149,7 @@ struct MealListView: View {
 				.font(.system(size: 14, weight: .semibold))
 		}
 		.padding()
-		.background(.white)
+		.background(Color(.systemBackground))
 		.cornerRadius(Constants.Corner.cornerRadiusM)
 		.shadow(
 			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
