@@ -47,7 +47,7 @@ struct MealListView: View {
 					x: Constants.Shadow.shadowX,
 					y: Constants.Shadow.shadowY
 				)
-
+			
 		}
 		.padding(.horizontal)
 		.padding(.top)
@@ -132,10 +132,12 @@ struct MealListView: View {
 				image.resizable()
 					.scaledToFill()
 			} placeholder: {
-				Color.gray.opacity(0.3)
+				Color.gray.opacity(Constants.Placeholder.opacity)
 			}
-			.frame(width: 80, height: 80)
-			.clipShape(RoundedRectangle(cornerRadius: 12))
+			.frame(width: Constants.Row.W, height: Constants.Row.H)
+			.clipShape(
+				RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusS)
+			)
 			
 			Text(meal.strMeal)
 				.font(.headline)
@@ -149,7 +151,12 @@ struct MealListView: View {
 		.padding()
 		.background(.white)
 		.cornerRadius(Constants.Corner.cornerRadiusM)
-		.shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+		.shadow(
+			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+			radius: Constants.Shadow.shadowRadius,
+			x: Constants.Shadow.shadowX,
+			y: Constants.Shadow.shadowY
+		)
 		
 	}
 }
@@ -211,14 +218,9 @@ private struct Constants {
 		static let shadowY: CGFloat = 5
 	}
 	
-	struct Button {
-		static let maxWidth: CGFloat = 500
-	}
-	
-	struct MealCard {
-		static let inset: CGFloat = 12
-		static let maxW: CGFloat = 350
-		static let maxH: CGFloat = 350
+	struct Row {
+		static let W: CGFloat = 100
+		static let H: CGFloat = 100
 	}
 	
 	struct Placeholder {
