@@ -42,7 +42,7 @@ struct HomeView: View {
 						// Adaptive grid based on screen width
 						let columns = adaptiveColumns(for: bounds.size.width)
 						
-						LazyVGrid(columns: columns, spacing: 16) {
+						LazyVGrid(columns: columns, spacing: Constants.Grid.spacing) {
 							ForEach(homeVM.recommendedMeals) { meal in
 								NavigationLink(destination: MealDetailWrapperView(mealID: meal.idMeal)) {
 									MealCard(meal: meal)
@@ -81,9 +81,12 @@ struct HomeView: View {
 	/// Adjust number of columns depending on screen width
 	private func adaptiveColumns(for width: CGFloat) -> [GridItem] {
 		if width > 600 {
-			return Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
+			return Array(
+				repeating: GridItem(.flexible(), spacing: Constants.Grid.spacing),
+				count: 3
+			)
 		} else {
-			return Array(repeating: GridItem(.flexible(), spacing: 16), count: 2)
+			return Array(repeating: GridItem(.flexible(), spacing: Constants.Grid.spacing), count: 2)
 		}
 	}
 	
@@ -98,12 +101,17 @@ struct HomeView: View {
 		} label: {
 			Text("\(Image(systemName: "sparkles")) Random Recipe \(Image(systemName: "sparkles"))")
 				.font(.headline)
-				.frame(maxWidth: 500)
+				.frame(maxWidth: Constants.Button.maxWidth)
 				.padding()
 				.background(.ultraThinMaterial)
-				.cornerRadius(12)
-				.shadow(color: Color.black.opacity(0.15), radius: 10, x: 0, y: 5)
-				.frame(maxWidth: .infinity)
+				.cornerRadius(Constants.Corner.cornerRadiusS)
+				.cornerRadius(Constants.Corner.cornerRadiusM)
+				.shadow(
+					color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+					radius: Constants.Shadow.shadowRadius,
+					x: Constants.Shadow.shadowX,
+					y: Constants.Shadow.shadowY
+				)				.frame(maxWidth: .infinity)
 		}
 	}
 }
@@ -116,13 +124,16 @@ struct MealCard: View {
 				image
 					.resizable()
 					.scaledToFill()
-					.frame(maxWidth: 350, maxHeight: 350)
+					.frame(maxWidth: Constants.MealCard.maxW, maxHeight: Constants.MealCard.maxH)
 					.clipped()
-					.cornerRadius(12)
+					.cornerRadius(Constants.Corner.cornerRadiusM)
 			} placeholder: {
-				Color.gray.opacity(0.3)
-					.frame(maxWidth: 350, maxHeight: 350)
-					.cornerRadius(12)
+				Color.gray.opacity(Constants.Placeholder.opacity)
+					.frame(
+						maxWidth: Constants.Placeholder.maxW,
+						maxHeight: Constants.Placeholder.maxH
+					)
+					.cornerRadius(Constants.Corner.cornerRadiusM)
 			}
 			Text(meal.strMeal)
 				.font(.caption)
@@ -130,12 +141,57 @@ struct MealCard: View {
 				.padding(.top, 4)
 		}
 		.frame(maxWidth: .infinity)
-		.padding(8)
+		.padding(Constants.MealCard.inset)
 		.background(.ultraThinMaterial)
-		.cornerRadius(20)
-		.shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+		.cornerRadius(Constants.Corner.cornerRadiusM)
+		.shadow(
+			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+			radius: Constants.Shadow.shadowRadius,
+			x: Constants.Shadow.shadowX,
+			y: Constants.Shadow.shadowY
+		)
 	}
 }
+
+// MARK: - Style Constants
+
+private struct Constants {
+	
+	struct Corner {
+		static let cornerRadiusS: CGFloat = 12
+		static let cornerRadiusM: CGFloat = 16
+		static let cornerRadiusL: CGFloat = 24
+	}
+	
+	struct Shadow {
+		static let shadowOpacity: CGFloat = 0.15
+		static let shadowRadius: CGFloat = 10
+		static let shadowX: CGFloat = 0
+		static let shadowY: CGFloat = 5
+	}
+	
+	struct Button {
+		static let maxWidth: CGFloat = 500
+	}
+	
+	struct MealCard {
+		static let inset: CGFloat = 12
+		static let maxW: CGFloat = 350
+		static let maxH: CGFloat = 350
+	}
+	
+	struct Placeholder {
+		static let opacity: CGFloat = 0.3
+		static let maxW: CGFloat = 350
+		static let maxH: CGFloat = 350
+	}
+	
+	struct Grid {
+		static let spacing: CGFloat = 16
+	}
+	
+}
+
 
 #Preview {
 	HomeView()

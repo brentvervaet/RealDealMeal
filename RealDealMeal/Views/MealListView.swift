@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct MealListView: View {
-	// MARK: - Properties
 	
 	@StateObject private var mealListVM = MealListViewModel()
 	private typealias Category = MealCategory
-	
-	// MARK: - Body
 	
 	var body: some View {
 		GeometryReader{ bounds in
@@ -22,7 +19,7 @@ struct MealListView: View {
 					searchBar
 					categoryList
 					contentView
-								
+					
 				}
 				.navigationTitle("Find a recipe")
 			}
@@ -43,9 +40,13 @@ struct MealListView: View {
 				}
 				.padding(10)
 				.background(Color(.systemBackground))
-				.cornerRadius(Style.cornerRadius)
-				.shadow(color: Color.black.opacity(0.1), radius: Style.shadowRadius, x: 0, y: 2)
-				//.frame(maxWidth: bounds.size.width * 0.86)
+				.cornerRadius(Constants.Corner.cornerRadiusS)
+				.shadow(
+					color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+					radius: Constants.Shadow.shadowRadius ,
+					x: Constants.Shadow.shadowX,
+					y: Constants.Shadow.shadowY
+				)
 
 		}
 		.padding(.horizontal)
@@ -146,29 +147,19 @@ struct MealListView: View {
 				.font(.system(size: 14, weight: .semibold))
 		}
 		.padding()
-		.background(.ultraThinMaterial)
-		.cornerRadius(12)
-		.shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 4)
+		.background(.white)
+		.cornerRadius(Constants.Corner.cornerRadiusM)
+		.shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
 		
-	}
-	
-	// MARK: - Style Constants
-	
-	private enum Style {
-		static let cornerRadius: CGFloat = 12
-		static let shadowRadius: CGFloat = 4
 	}
 }
 
 struct MealDetailWrapperView: View {
-	// MARK: - Properties
 	
 	let mealID: String
 	@State private var meal: Meal? = nil
 	@State private var isLoading = true
 	@State private var errorMessage: String? = nil
-	
-	// MARK: - Body
 	
 	var body: some View {
 		Group {
@@ -202,6 +193,26 @@ struct MealDetailWrapperView: View {
 		isLoading = false
 	}
 }
+
+// MARK: - Style Constants
+
+private struct Constants {
+	
+	struct Corner {
+		static let cornerRadiusS: CGFloat = 12
+		static let cornerRadiusM: CGFloat = 16
+		static let cornerRadiusL: CGFloat = 24
+	}
+	
+	struct Shadow {
+		static let shadowOpacity: CGFloat = 0.1
+		static let shadowRadius: CGFloat = 5
+		static let shadowX: CGFloat = 0
+		static let shadowY: CGFloat = 2
+	}
+}
+
+// MARK: - Preview
 
 #Preview {
 	MealListView()

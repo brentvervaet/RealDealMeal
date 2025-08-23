@@ -22,15 +22,14 @@ struct MealDetailView: View {
 		GeometryReader { bounds in
 			ScrollView {
 				if bounds.size.width > 700 { // wide screens → horizontal layout
-					
 					VStack{
 						HStack(alignment: .bottom, spacing: 20) {
 							mealImage
 								.frame(width: min(bounds.size.width * 0.4, 400)) // max 400 wide
 							titleAndButtons
-							
 						}
 						detailCard
+
 					}
 					.padding()
 					.frame(maxWidth: bounds.size.width * 0.8 )
@@ -60,8 +59,12 @@ struct MealDetailView: View {
 		} placeholder: {
 			Color.gray.opacity(0.3)
 		}
-		.clipShape(RoundedRectangle(cornerRadius: 12))
-		.background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+		.clipShape(
+			RoundedRectangle(
+				cornerRadius: Constants.cornerRadiusM,
+				style: .continuous
+			)
+		)
 		.shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
 	}
 
@@ -124,13 +127,9 @@ struct MealDetailView: View {
 			}
 		}
 		.padding()
-		.clipShape(RoundedRectangle(cornerRadius: 12))
 		.background(.ultraThinMaterial)
-		.overlay(
-			RoundedRectangle(cornerRadius: 12)
-				.stroke(.gray.opacity(0.1))
-		)
-		.shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+		.clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadiusM))
+		.shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
 	}
 
 	/// Placeholder view for missing meal details.
@@ -201,5 +200,13 @@ struct MealDetailView: View {
 					.multilineTextAlignment(.leading)
 			}
 		}
+	}
+	
+	// MARK: - Style Constants
+
+	private struct Constants {
+		static let cornerRadiusS: CGFloat = 12
+		static let cornerRadiusM: CGFloat = 16
+		static let cornerRadiusL: CGFloat = 24
 	}
 }
