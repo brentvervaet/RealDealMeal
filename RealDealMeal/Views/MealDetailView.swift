@@ -12,11 +12,11 @@ struct MealDetailView: View {
 	// MARK: - Typealiases
 	/// IngredientRow is a view representing a single ingredient line.
 	private typealias IngredientRow = IngredientRowView
-
+	
 	// MARK: - Properties
 	let meal: Meal
 	@EnvironmentObject var favoritesVM: FavoritesViewModel
-
+	
 	// MARK: - Body
 	var body: some View {
 		GeometryReader { bounds in
@@ -29,7 +29,7 @@ struct MealDetailView: View {
 							titleAndButtons
 						}
 						detailCard
-
+						
 					}
 					.padding()
 					.frame(maxWidth: bounds.size.width * 0.8 )
@@ -50,24 +50,28 @@ struct MealDetailView: View {
 		.navigationBarTitleDisplayMode(.inline)
 	}
 	// MARK: - Private Views
-
+	
 	/// The meal image with styling.
 	private var mealImage: some View {
 		AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
 			image.resizable()
 				.scaledToFit()
 		} placeholder: {
-			Color.gray.opacity(0.3)
+			Color.gray.opacity(Constants.Placeholder.opacity)
 		}
 		.clipShape(
 			RoundedRectangle(
-				cornerRadius: Constants.cornerRadiusM,
+				cornerRadius: Constants.Corner.cornerRadiusM,
 				style: .continuous
 			)
 		)
-		.shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
-	}
-
+		.shadow(
+			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+			radius: Constants.Shadow.shadowRadius,
+			x: Constants.Shadow.shadowX,
+			y: Constants.Shadow.shadowY
+		)	}
+	
 	/// The title and action buttons row.
 	private var titleAndButtons: some View {
 		HStack {
@@ -79,7 +83,7 @@ struct MealDetailView: View {
 			shareButton
 		}
 	}
-
+	
 	/// The favorite button.
 	private var favoriteButton: some View {
 		Button {
@@ -92,7 +96,7 @@ struct MealDetailView: View {
 				.font(.title2)
 		}
 	}
-
+	
 	/// The share button.
 	private var shareButton: some View {
 		Button {
@@ -108,7 +112,7 @@ struct MealDetailView: View {
 				.font(.title2)
 		}
 	}
-
+	
 	/// The main detail card showing ingredients and instructions.
 	private var detailCard: some View {
 		VStack(alignment: .leading, spacing: 16) {
@@ -128,10 +132,15 @@ struct MealDetailView: View {
 		}
 		.padding()
 		.background(.ultraThinMaterial)
-		.clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadiusM))
-		.shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+		.clipShape(RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusM))
+		.shadow(
+			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+			radius: Constants.Shadow.shadowRadius,
+			x: Constants.Shadow.shadowX,
+			y: Constants.Shadow.shadowY
+		)
 	}
-
+	
 	/// Placeholder view for missing meal details.
 	private var comingSoon: some View {
 		HStack {
@@ -143,7 +152,7 @@ struct MealDetailView: View {
 		}
 		.frame(maxWidth: .infinity)
 	}
-
+	
 	/// The ingredients section.
 	private var ingredientsSection: some View {
 		VStack(alignment: .leading, spacing: 8) {
@@ -159,7 +168,7 @@ struct MealDetailView: View {
 			.padding(.vertical)
 		}
 	}
-
+	
 	/// The instructions section.
 	private var instructionsSection: some View {
 		VStack(alignment: .leading, spacing: 8) {
@@ -173,9 +182,9 @@ struct MealDetailView: View {
 			.padding(.vertical)
 		}
 	}
-
+	
 	// MARK: - Row Views
-
+	
 	/// Displays a single ingredient row.
 	private struct IngredientRowView: View {
 		let ingredient: Meal.Ingredient
@@ -186,7 +195,7 @@ struct MealDetailView: View {
 			}
 		}
 	}
-
+	
 	/// Displays a single instruction step row.
 	private struct InstructionStepRow: View {
 		let index: Int
@@ -201,12 +210,38 @@ struct MealDetailView: View {
 			}
 		}
 	}
-	
-	// MARK: - Style Constants
+}
 
-	private struct Constants {
+// MARK: - Style Constants
+
+private struct Constants {
+	
+	struct Corner {
 		static let cornerRadiusS: CGFloat = 12
 		static let cornerRadiusM: CGFloat = 16
 		static let cornerRadiusL: CGFloat = 24
 	}
+	
+	struct Shadow {
+		static let shadowOpacity: CGFloat = 0.15
+		static let shadowRadius: CGFloat = 10
+		static let shadowX: CGFloat = 0
+		static let shadowY: CGFloat = 5
+	}
+	
+	struct Row {
+		static let W: CGFloat = 100
+		static let H: CGFloat = 100
+	}
+	
+	struct Placeholder {
+		static let opacity: CGFloat = 0.3
+		static let maxW: CGFloat = 350
+		static let maxH: CGFloat = 350
+	}
+	
+	struct Grid {
+		static let spacing: CGFloat = 16
+	}
+	
 }
