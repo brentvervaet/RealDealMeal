@@ -36,7 +36,7 @@ struct HomeView: View {
 						
 						randomRecipeButton
 							.padding(.horizontal)
-			
+						
 						
 						
 						// Adaptive grid based on screen width
@@ -51,11 +51,10 @@ struct HomeView: View {
 							}
 						}
 						.padding(.horizontal)
-						
 					}
 					.padding(.vertical)
 				}
-				.frame(width: bounds.size.width, height: bounds.size.height)
+				
 			}
 			.navigationTitle("Home")
 			.navigationDestination(isPresented: $showRandomMealDetail) {
@@ -81,9 +80,7 @@ struct HomeView: View {
 	
 	/// Adjust number of columns depending on screen width
 	private func adaptiveColumns(for width: CGFloat) -> [GridItem] {
-		if width > 900 {
-			return Array(repeating: GridItem(.flexible(), spacing: 16), count: 4)
-		} else if width > 600 {
+		if width > 600 {
 			return Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
 		} else {
 			return Array(repeating: GridItem(.flexible(), spacing: 16), count: 2)

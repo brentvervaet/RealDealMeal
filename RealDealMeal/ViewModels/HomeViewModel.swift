@@ -20,7 +20,7 @@ class HomeViewModel: ObservableObject {
 	@Published var randomMeal: Meal?
 	
 	// MARK: - Constants
-	private let recommendedMealCount = 12
+	private let recommendedMealCount = 9
 	
 	// MARK: - Public Functions
 	

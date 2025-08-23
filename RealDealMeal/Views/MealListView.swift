@@ -16,13 +16,16 @@ struct MealListView: View {
 	// MARK: - Body
 	
 	var body: some View {
-		NavigationStack {
-			VStack(alignment: .leading) {
-				searchBar
-				categoryList
-				contentView
+		GeometryReader{ bounds in
+			NavigationStack {
+				VStack(alignment: .leading) {
+					searchBar
+					categoryList
+					contentView
+								
+				}
+				.navigationTitle("Find a recipe")
 			}
-			.navigationTitle("Find a recipe")
 		}
 	}
 	
@@ -42,10 +45,11 @@ struct MealListView: View {
 				.background(Color(.systemBackground))
 				.cornerRadius(Style.cornerRadius)
 				.shadow(color: Color.black.opacity(0.1), radius: Style.shadowRadius, x: 0, y: 2)
+				//.frame(maxWidth: bounds.size.width * 0.86)
+
 		}
 		.padding(.horizontal)
 		.padding(.top)
-		.frame(maxWidth: 400)
 	}
 	
 	/// Horizontally scrollable list of categories as selectable buttons
@@ -142,7 +146,6 @@ struct MealListView: View {
 				.font(.system(size: 14, weight: .semibold))
 		}
 		.padding()
-		.frame(maxWidth: 700)
 		.background(.ultraThinMaterial)
 		.cornerRadius(12)
 		.shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 4)

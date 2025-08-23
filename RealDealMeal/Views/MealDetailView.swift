@@ -19,18 +19,37 @@ struct MealDetailView: View {
 
 	// MARK: - Body
 	var body: some View {
-		ScrollView {
-			VStack(alignment: .leading, spacing: 20) {
-				mealImage
-				titleAndButtons
-				detailCard
+		GeometryReader { bounds in
+			ScrollView {
+				if bounds.size.width > 700 { // wide screens → horizontal layout
+					
+					VStack{
+						HStack(alignment: .bottom, spacing: 20) {
+							mealImage
+								.frame(width: min(bounds.size.width * 0.4, 400)) // max 400 wide
+							titleAndButtons
+							
+						}
+						detailCard
+					}
+					.padding()
+					.frame(maxWidth: bounds.size.width * 0.8 )
+					.frame(maxWidth: .infinity)
+				} else { // iPhone or portrait
+					VStack(alignment: .leading, spacing: 20) {
+						mealImage
+						titleAndButtons
+						detailCard
+					}
+					.padding()
+					.frame(maxWidth: 800)
+					.frame(maxWidth: .infinity)
+				}
 			}
-			.padding()
 		}
 		.navigationTitle(meal.strMeal)
 		.navigationBarTitleDisplayMode(.inline)
 	}
-
 	// MARK: - Private Views
 
 	/// The meal image with styling.
