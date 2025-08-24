@@ -38,7 +38,7 @@ struct MealListView: View {
 					mealListVM.selectedCategory = nil
 					mealListVM.searchMeals()
 				}
-				.onChange(of: mealListVM.searchQuery) { newValue in
+				.onChange(of: mealListVM.searchQuery) { _, newValue in
 					// Live search: only start when user has typed at least 2 chars
 					mealListVM.selectedCategory = nil
 					if newValue.count >= 2 {
