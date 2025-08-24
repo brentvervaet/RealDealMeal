@@ -1,6 +1,7 @@
 # RealDealMeal 🍽️
 
-Discover, explore, and save recipes powered by [TheMealDB](https://www.themealdb.com/) — built with SwiftUI, async/await, and a clean MVVM architecture.
+Discover, explore, and save recipes powered by [TheMealDB](https://www.themealdb.com/).
+Built with SwiftUI, async/await, and a clean MVVM architecture.
 
 ## Overview
 
