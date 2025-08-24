@@ -210,40 +210,10 @@ struct MealDetailView: View {
 	}
 
 	// MARK: - Typealiases
+
 	/// IngredientRow is a view representing a single ingredient line.
 	private typealias IngredientRow = IngredientRowView
 
-	// MARK: - Style Constants
-
-	private struct Constants {
-
-		struct Corner {
-			static let cornerRadiusS: CGFloat = 12
-			static let cornerRadiusM: CGFloat = 16
-			static let cornerRadiusL: CGFloat = 24
-		}
-
-		struct Shadow {
-			static let shadowOpacity: CGFloat = 0.15
-			static let shadowRadius: CGFloat = 10
-			static let shadowX: CGFloat = 1
-			static let shadowY: CGFloat = 5
-		}
-
-		struct Row {
-			static let W: CGFloat = 100
-			static let H: CGFloat = 100
-		}
-
-		struct Placeholder {
-			static let opacity: CGFloat = 0.3
-		}
-
-		struct Grid {
-			static let spacing: CGFloat = 16
-		}
-
-	}
 }
 
 // MARK: - ShareSheet
@@ -257,4 +227,27 @@ private struct ShareSheet: UIViewControllerRepresentable {
 	}
 
 	func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
+
+// MARK: - Style Constants
+
+private struct Constants {
+
+	struct Corner {
+		static let cornerRadiusS: CGFloat = 12
+		static let cornerRadiusM: CGFloat = 16
+		static let cornerRadiusL: CGFloat = 24
+	}
+
+	struct Shadow {
+		static let shadowOpacity: CGFloat = 0.15
+		static let shadowRadius: CGFloat = 10
+		static let shadowX: CGFloat = 1
+		static let shadowY: CGFloat = 5
+	}
+
+	struct Placeholder {
+		static let opacity: CGFloat = 0.3
+	}
+
 }
