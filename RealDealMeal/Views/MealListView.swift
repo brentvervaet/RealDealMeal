@@ -85,7 +85,7 @@ struct MealListView: View {
 				)
 				.foregroundColor(
 					mealListVM.selectedCategory == category ?
-						.white : .primary
+					Color(.systemBackground) : .primary
 				)
 				.clipShape(Capsule())
 		}

@@ -104,19 +104,26 @@ struct HomeView: View {
 				.frame(maxWidth: Constants.Button.maxWidth)
 				.padding()
 				.background(Color(.systemBackground))
-				.cornerRadius(Constants.Corner.cornerRadiusS)
 				.cornerRadius(Constants.Corner.cornerRadiusM)
+				.overlay(
+					RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusM)
+						.stroke(Color.primary.opacity(0.1), lineWidth: 0.5)
+				)
 				.shadow(
-					color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+					color: Color.primary
+						.opacity(Constants.Shadow.shadowOpacity),
 					radius: Constants.Shadow.shadowRadius,
 					x: Constants.Shadow.shadowX,
 					y: Constants.Shadow.shadowY
-				)				.frame(maxWidth: .infinity)
+				)
+				.frame(maxWidth: .infinity)
 		}
 	}
 }
 struct MealCard: View {
 	let meal: Meal
+	@Environment(\.colorScheme) private var colorScheme
+	
 	
 	var body: some View {
 		VStack {
@@ -142,10 +149,15 @@ struct MealCard: View {
 		}
 		.frame(maxWidth: .infinity)
 		.padding(Constants.Card.inset)
-		.background(.white)
+		.background(Color(.systemBackground))
 		.cornerRadius(Constants.Corner.cornerRadiusM)
+		.overlay(
+			RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusM)
+				.stroke(Color.primary.opacity(0.1), lineWidth: 0.5)
+		)
 		.shadow(
-			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+			color: Color.primary
+				.opacity(Constants.Shadow.shadowOpacity),
 			radius: Constants.Shadow.shadowRadius,
 			x: Constants.Shadow.shadowX,
 			y: Constants.Shadow.shadowY

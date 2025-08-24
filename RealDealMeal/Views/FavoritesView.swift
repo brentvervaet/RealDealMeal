@@ -47,17 +47,22 @@ struct FavoritesView: View {
 										.font(.system(size: 14, weight: .semibold))
 								}
 								.padding()
-								.background(.white)
+								.background(.ultraThinMaterial)
 								.cornerRadius(Constants.Corner.cornerRadiusM)
+								.overlay(
+									RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusM)
+										.stroke(Color.primary.opacity(0.1), lineWidth: 0.5)
+								)
 								.shadow(
-									color: Color.black
+									color: Color.primary
 										.opacity(
 											Constants.Shadow.shadowOpacity
 										),
-									radius: Constants.Shadow.shadowRadius,
-									x: Constants.Shadow.shadowX,
-									y: Constants.Shadow.shadowY
+									radius: 8,
+									x: 0,
+									y: 4
 								)
+								.frame(maxWidth: .infinity)
 								
 							}
 							.padding(.horizontal)
@@ -69,7 +74,7 @@ struct FavoritesView: View {
 			}
 		}
 	}
-
+	
 }
 
 // MARK: - Style Constants
