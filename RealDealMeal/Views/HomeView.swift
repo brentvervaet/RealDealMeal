@@ -92,7 +92,6 @@ struct HomeView: View {
 	}
 
 	// MARK: - private views
-
 	private var randomRecipeButton: some View {
 		Button {
 			Task {
@@ -166,7 +165,6 @@ struct MealCard: View {
 }
 
 // MARK: - Style Constants
-
 private struct Constants {
 
 	struct Corner {

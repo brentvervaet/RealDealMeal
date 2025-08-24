@@ -17,8 +17,6 @@ Explore recommendations or get a random recipe to spice up your cooking!
 """
 
 	// MARK: - Body
-
-	/// The main content view displaying app information and a portfolio link.
 	var body: some View {
 		NavigationStack {
 			content
@@ -28,8 +26,6 @@ Explore recommendations or get a random recipe to spice up your cooking!
 	}
 
 	// MARK: - Private Views
-
-	/// Vertical stack containing the description, link, and spacer.
 	private var content: some View {
 		VStack(spacing: 20) {
 			descriptionTextView
@@ -39,13 +35,13 @@ Explore recommendations or get a random recipe to spice up your cooking!
 		.padding()
 	}
 
-	/// Text view showing the app description.
+	// Text
 	private var descriptionTextView: some View {
 		Text(descriptionText)
 			.multilineTextAlignment(.center)
 	}
 
-	/// Link to the developer's portfolio.
+	// Link
 	private var portfolioLink: some View {
 		Link("Visit my Portfolio", destination: portfolioURL)
 			.font(.headline)

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - API Errors
-/// Errors raised by the network layer. ViewModels map these to user-friendly messages.
+/// Errors raised by the network layer
 enum APIError: Error {
 	case badURL
 	case transport(Error)
@@ -16,7 +16,7 @@ enum APIError: Error {
 	case decoding(Error)
 }
 
-/// Protocol used by ViewModels so the service can be mocked in tests.
+/// Protocol used by ViewModels
 protocol APIServiceType {
 	typealias MealResult = [Meal]
 	typealias CategoryResult = [MealCategory]
@@ -29,7 +29,6 @@ protocol APIServiceType {
 }
 
 final class APIService: APIServiceType {
-	// MARK: - Typealiases
 	static let shared = APIService()
 	private init() {}
 

@@ -27,8 +27,7 @@ struct MealListView: View {
 	}
 
 	// MARK: - Private Views
-
-	/// Search bar with text field and submit action
+	// Search bar with text field and submit action
 	private var searchBar: some View {
 		HStack {
 			TextField("Search meals...", text: $mealListVM.searchQuery)
@@ -60,7 +59,7 @@ struct MealListView: View {
 		.padding(.top)
 	}
 
-	/// Horizontally scrollable list of categories as selectable buttons
+	// Horizontally scrollable list of categories as selectable buttons
 	private var categoryList: some View {
 		ScrollView(.horizontal, showsIndicators: false ) {
 			HStack(spacing: 12) {
@@ -75,10 +74,9 @@ struct MealListView: View {
 		}
 	}
 
-	/// Button view for a meal category
+	// Button view for a meal category
 	private func categoryButton(for category: Category) -> some View {
 		Button {
-			// When a category is selected, clear the search query and set the category
 			mealListVM.searchQuery = ""
 			Task { await mealListVM.loadMealsByCategory(category) }
 			mealListVM.selectedCategory = category
@@ -118,7 +116,7 @@ struct MealListView: View {
 		}
 	}
 
-	/// Scrollable list of meals with navigation links to detail views
+	// Scrollable list of meals with navigation links to detail views
 	private var mealList: some View {
 		ScrollView {
 			LazyVStack(spacing: 12) {
@@ -132,7 +130,7 @@ struct MealListView: View {
 		}
 	}
 
-	/// Single row view representing a meal in the list
+	// Single row view representing a meal in the list
 	private func mealRow(for meal: Meal) -> some View {
 		HStack(spacing: 16) {
 			AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
@@ -195,8 +193,7 @@ struct MealDetailWrapperView: View {
 	}
 
 	// MARK: - Private Methods
-
-	/// Loads detailed meal information asynchronously
+	/// Loads detailed meal information
 	private func loadDetails() async {
 		do {
 			isLoading = true
@@ -210,7 +207,6 @@ struct MealDetailWrapperView: View {
 }
 
 // MARK: - Style Constants
-
 private struct Constants {
 
 	struct Corner {

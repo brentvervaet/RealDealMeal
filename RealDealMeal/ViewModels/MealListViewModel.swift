@@ -33,7 +33,7 @@ class MealListViewModel: ObservableObject {
 	// MARK: - Public Methods
 
 	/// Searches for meals matching the current search query.
-	// Task used for the current search; will be cancelled when a new search is initiated
+	// Task used for the current search
 	private var searchTask: Task<Void, Never>?
 
 	/// Public entry point to start a debounced search. Cancels prior task if active.
@@ -53,7 +53,7 @@ class MealListViewModel: ObservableObject {
 		}
 	}
 
-	/// Perform the actual search; separated so it runs on the actor and can use await.
+	/// Perform the actual search
 	private func performSearch() async {
 		guard !searchQuery.isEmpty else { return }
 		isLoading = true

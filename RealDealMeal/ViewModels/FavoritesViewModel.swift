@@ -15,14 +15,11 @@ typealias MealFavorites = [Meal]
 final class FavoritesViewModel: ObservableObject {
 	// MARK: - Properties
 
-	/// Raw data for favorite meals, stored in AppStorage.
 	@AppStorage("favoriteMeals") private var favoriteMealsData: Data = Data()
-	/// The decoded list of favorite meals.
 	@Published private(set) var favorites: MealFavorites = []
 
 	// MARK: - Initialization
 
-	/// Initializes the FavoritesViewModel, loading favorites from AppStorage.
 	init() {
 		loadFavorites()
 	}

@@ -76,7 +76,7 @@ struct Meal: Codable, Identifiable, Hashable {
 		typealias Ingredient = (ingredient: String, measure: String)
 
 		/// All non-empty ingredients and their measures for this meal.
-		/// This composes the 20 API fields into a friendly array used in the UI.
+		/// This composes the 20 API fields into an array used in the UI.
 		var ingredients: [Ingredient] {
 		let ingredientList = [
 			strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5,

@@ -17,12 +17,9 @@ struct CategoryResponse: Codable {
 /// Represents a single meal category fetched from TheMealDB API.
 /// Used by `MealListViewModel` to show selectable categories in the UI.
 struct MealCategory: Codable, Identifiable, Hashable {
-	/// API Properties
+	
 	let strCategory: String
-
 	var id: String { strCategory }
-
-	/// Swift-friendly name of the category.
 	var name: String { strCategory }
 }
 

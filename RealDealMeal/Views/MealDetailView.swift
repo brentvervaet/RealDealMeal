@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-/// Displays detailed information about a meal, including image, title, ingredients, and instructions.
+// Displays detailed information about a meal, including image, title, ingredients, and instructions.
 struct MealDetailView: View {
 
 	// MARK: - Properties
@@ -51,7 +51,7 @@ struct MealDetailView: View {
 	}
 	// MARK: - Private Views
 
-	/// The meal image with styling.
+	/// Meal image with styling.
 	private var mealImage: some View {
 		AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
 			image.resizable()
@@ -71,7 +71,7 @@ struct MealDetailView: View {
 			y: Constants.Shadow.shadowY
 		)	}
 
-	/// The title and action buttons row.
+	// Title and action buttons row.
 	private var titleAndButtons: some View {
 		HStack {
 			Text(meal.strMeal)
@@ -83,7 +83,7 @@ struct MealDetailView: View {
 		}
 	}
 
-	/// The favorite button.
+	// The favorite button.
 	private var favoriteButton: some View {
 		Button {
 			Task {
@@ -96,7 +96,7 @@ struct MealDetailView: View {
 		}
 	}
 
-	/// The share button.
+	// The share button.
 	private var shareButton: some View {
 		Button {
 			var items: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)"]
@@ -112,7 +112,7 @@ struct MealDetailView: View {
 		}
 	}
 
-	/// The main detail card showing ingredients and instructions.
+	// The main detail card showing ingredients and instructions.
 	private var detailCard: some View {
 		VStack(alignment: .leading, spacing: 16) {
 			if meal.ingredients.isEmpty && meal.instructionSteps.isEmpty {
@@ -140,7 +140,7 @@ struct MealDetailView: View {
 		)
 	}
 
-	/// Placeholder view for missing meal details.
+	// Placeholder view for missing meal details.
 	private var comingSoon: some View {
 		HStack {
 			Spacer()
@@ -152,7 +152,7 @@ struct MealDetailView: View {
 		.frame(maxWidth: .infinity)
 	}
 
-	/// The ingredients section.
+/// The ingredients section.
 	private var ingredientsSection: some View {
 		VStack(alignment: .leading, spacing: 8) {
 			Text("Ingredients")
@@ -168,7 +168,7 @@ struct MealDetailView: View {
 		}
 	}
 
-	/// The instructions section.
+	// The instructions section.
 	private var instructionsSection: some View {
 		VStack(alignment: .leading, spacing: 8) {
 			Text("Instructions")
@@ -183,7 +183,7 @@ struct MealDetailView: View {
 	}
 
 	// MARK: - Row Views
-	/// Displays a single ingredient row.
+	// Displays a single ingredient row.
 	private struct IngredientRowView: View {
 		let ingredient: Meal.Ingredient
 		var body: some View {
@@ -194,7 +194,7 @@ struct MealDetailView: View {
 		}
 	}
 
-	/// Displays a single instruction step row.
+	// Displays a single instruction step row.
 	private struct InstructionStepRow: View {
 		let index: Int
 		let step: String
@@ -210,15 +210,12 @@ struct MealDetailView: View {
 	}
 
 	// MARK: - Typealiases
-
-	/// IngredientRow is a view representing a single ingredient line.
+	// IngredientRow is a view representing a single ingredient line.
 	private typealias IngredientRow = IngredientRowView
 
 }
 
 // MARK: - ShareSheet
-
-/// Lightweight wrapper to present a UIActivityViewController from SwiftUI.
 private struct ShareSheet: UIViewControllerRepresentable {
 	let activityItems: [Any]
 
@@ -230,7 +227,6 @@ private struct ShareSheet: UIViewControllerRepresentable {
 }
 
 // MARK: - Style Constants
-
 private struct Constants {
 
 	struct Corner {
