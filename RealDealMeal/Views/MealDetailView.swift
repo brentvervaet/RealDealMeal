@@ -9,9 +9,6 @@ import SwiftUI
 
 /// Displays detailed information about a meal, including image, title, ingredients, and instructions.
 struct MealDetailView: View {
-	// MARK: - Typealiases
-	/// IngredientRow is a view representing a single ingredient line.
-	private typealias IngredientRow = IngredientRowView
 	
 	// MARK: - Properties
 	let meal: Meal
@@ -62,11 +59,10 @@ struct MealDetailView: View {
 		.clipShape(
 			RoundedRectangle(
 				cornerRadius: Constants.Corner.cornerRadiusM,
-				style: .continuous
 			)
 		)
 		.shadow(
-			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+			color: Color.primary.opacity(Constants.Shadow.shadowOpacity),
 			radius: Constants.Shadow.shadowRadius,
 			x: Constants.Shadow.shadowX,
 			y: Constants.Shadow.shadowY
@@ -134,7 +130,7 @@ struct MealDetailView: View {
 		.background(Color(.systemBackground))
 		.clipShape(RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusM))
 		.shadow(
-			color: Color.black.opacity(Constants.Shadow.shadowOpacity),
+			color: Color.primary.opacity(Constants.Shadow.shadowOpacity),
 			radius: Constants.Shadow.shadowRadius,
 			x: Constants.Shadow.shadowX,
 			y: Constants.Shadow.shadowY
@@ -184,7 +180,6 @@ struct MealDetailView: View {
 	}
 	
 	// MARK: - Row Views
-	
 	/// Displays a single ingredient row.
 	private struct IngredientRowView: View {
 		let ingredient: Meal.Ingredient
@@ -210,7 +205,10 @@ struct MealDetailView: View {
 			}
 		}
 	}
-}
+	
+	// MARK: - Typealiases
+	/// IngredientRow is a view representing a single ingredient line.
+	private typealias IngredientRow = IngredientRowView}
 
 // MARK: - Style Constants
 
@@ -225,7 +223,7 @@ private struct Constants {
 	struct Shadow {
 		static let shadowOpacity: CGFloat = 0.15
 		static let shadowRadius: CGFloat = 10
-		static let shadowX: CGFloat = 0
+		static let shadowX: CGFloat = 1
 		static let shadowY: CGFloat = 5
 	}
 	
