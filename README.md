@@ -36,7 +36,6 @@ Service         -> fetch + decode (TheMealDB JSON) using async/await
 Model           -> Codable structs + computed helpers (ingredients, steps)
 ```
 
-Detailed flow diagrams and responsibilities: see `docs/MVVM_FLOW.md`.
 
 ### Key Design Choices
 
