@@ -15,13 +15,11 @@ struct CategoryResponse: Codable {
 
 /// Represents a single meal category fetched from TheMealDB API.
 struct MealCategory: Codable, Identifiable, Hashable {
-	// MARK: - API Properties
+	/// API Properties
 	let strCategory: String
 	
-	// MARK: - Identifiable
 	var id: String { strCategory }
 	
-	// MARK: - Computed Properties
 	/// Swift-friendly name of the category.
 	var name: String { strCategory }
 }

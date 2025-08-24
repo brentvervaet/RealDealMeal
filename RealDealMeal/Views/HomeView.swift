@@ -78,6 +78,7 @@ struct HomeView: View {
 		}
 	}
 	
+	//MARK: private func
 	/// Adjust number of columns depending on screen width
 	private func adaptiveColumns(for width: CGFloat) -> [GridItem] {
 		if width > 600 {
@@ -89,6 +90,8 @@ struct HomeView: View {
 			return Array(repeating: GridItem(.flexible(), spacing: Constants.Grid.spacing), count: 2)
 		}
 	}
+	
+	//MARK: - private views
 	
 	private var randomRecipeButton: some View {
 		Button {
@@ -120,6 +123,7 @@ struct HomeView: View {
 		}
 	}
 }
+
 struct MealCard: View {
 	let meal: Meal
 	@Environment(\.colorScheme) private var colorScheme
@@ -131,15 +135,12 @@ struct MealCard: View {
 				image
 					.resizable()
 					.scaledToFill()
-					.frame(maxWidth: Constants.Card.maxW, maxHeight: Constants.Card.maxH)
+					.aspectRatio(1, contentMode: .fit)
 					.clipped()
 					.cornerRadius(Constants.Corner.cornerRadiusM)
 			} placeholder: {
 				Color.gray.opacity(Constants.Placeholder.opacity)
-					.frame(
-						maxWidth: Constants.Placeholder.maxW,
-						maxHeight: Constants.Placeholder.maxH
-					)
+					.aspectRatio(1, contentMode: .fit)
 					.cornerRadius(Constants.Corner.cornerRadiusM)
 			}
 			Text(meal.strMeal)

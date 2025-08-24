@@ -47,7 +47,7 @@ struct FavoritesView: View {
 										.font(.system(size: 14, weight: .semibold))
 								}
 								.padding()
-								.background(.ultraThinMaterial)
+								.background(Color(.systemBackground))
 								.cornerRadius(Constants.Corner.cornerRadiusM)
 								.overlay(
 									RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusM)
