@@ -235,10 +235,6 @@ private struct Constants {
 		static let opacity: CGFloat = 0.3
 	}
 
-	struct Grid {
-		static let spacing: CGFloat = 16
-	}
-
 }
 
 // MARK: - Preview
