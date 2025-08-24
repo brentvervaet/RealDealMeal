@@ -42,8 +42,7 @@ struct MealListView: View {
 				.background(Color(.systemBackground))
 				.cornerRadius(Constants.Corner.cornerRadiusS)
 				.shadow(
-					color: Color.primary
-						.opacity(Constants.Shadow.shadowOpacity),
+					color: Color.primary.opacity(Constants.Shadow.shadowOpacity),
 					radius: Constants.Shadow.shadowRadius ,
 					x: Constants.Shadow.shadowX,
 					y: Constants.Shadow.shadowY

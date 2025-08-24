@@ -65,3 +65,11 @@ class MealListViewModel: ObservableObject {
 		}
 	}
 }
+
+//MARK: - ViewState
+/*enum ViewState {
+	case idle
+	case loading
+	case loaded
+	case error(String)
+}*/
