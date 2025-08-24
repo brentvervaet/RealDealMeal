@@ -141,7 +141,7 @@ struct MealListView: View {
 			} placeholder: {
 				Color.gray.opacity(Constants.Placeholder.opacity)
 			}
-			.frame(width: Constants.Row.W, height: Constants.Row.H)
+			.frame(width: Constants.Row.Width, height: Constants.Row.Height)
 			.clipShape(
 				RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusS)
 			)
@@ -227,8 +227,8 @@ private struct Constants {
 	}
 
 	struct Row {
-		static let W: CGFloat = 100
-		static let H: CGFloat = 100
+		static let Width: CGFloat = 100
+		static let Height: CGFloat = 100
 	}
 
 	struct Placeholder {

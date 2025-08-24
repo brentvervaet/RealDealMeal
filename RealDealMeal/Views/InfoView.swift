@@ -12,8 +12,9 @@ struct InfoView: View {
 
 	private let portfolioURL = URL(string: "https://brentvervaet-dev.vercel.app")!
 	private let descriptionText = """
- RealDealMeal is your go-to app for discovering delicious recipes and meal ideas. Explore recommendations or get a random recipe to spice up your cooking!
- """
+RealDealMeal is your go-to app for discovering delicious recipes and meal ideas.
+Explore recommendations or get a random recipe to spice up your cooking!
+"""
 
 	// MARK: - Body
 
