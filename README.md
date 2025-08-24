@@ -1,7 +1,6 @@
 # RealDealMeal 🍽️
 
 Discover, explore, and save recipes powered by [TheMealDB](https://www.themealdb.com/).
-Built with SwiftUI, async/await, and a clean MVVM architecture.
 
 ## Overview
 
@@ -73,18 +72,6 @@ RealDealMeal/
  ViewModels/      // Home, Search/List, Favorites logic
  Views/           // SwiftUI screens & components
 ```
-
-## Notable Implementation Details
-
-* Concurrency: Async/await networking; parallel random fetch with `withThrowingTaskGroup`.
-* Cancellation: Search tasks cancelled on new input; random meal tasks cancelled early when quota reached.
-* State Management: Pure SwiftUI + `@StateObject` + `@EnvironmentObject` for Favorites.
-* Persistence: Lightweight JSON encoding/decoding of favorites via `@AppStorage`.
-* UI Adaptivity: Grid column count adapts to width; detail view reflows for wider layouts.
-
-## Error Handling Strategy
-
-`APIService` maps low-level issues into an `APIError` enum (bad URL, transport, server(status), decoding). ViewModels interpret these to user-friendly strings so Views remain declarative and minimal.
 
 ## Author
 
