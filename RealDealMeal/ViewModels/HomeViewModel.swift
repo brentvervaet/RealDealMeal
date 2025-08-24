@@ -18,9 +18,8 @@ class HomeViewModel: ObservableObject {
 	@Published var isLoading = false
 	@Published var errorMessage: String?
 	@Published var randomMeal: Meal?
-	
-	private let recommendedMealCount = 9
 
+	private let recommendedMealCount = 9
 
 	// MARK: - Dependencies
 	private let service: APIServiceType
