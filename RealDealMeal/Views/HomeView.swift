@@ -62,6 +62,8 @@ struct HomeView: View {
 					MealDetailWrapperView(mealID: mealID)
 				}
 			}
+			// When the View appears it asks the ViewModel to load recommendations
+			// The View observes `homeVM.recommendedMeals` and updates automatically.
 			.onAppear {
 				if homeVM.recommendedMeals.isEmpty {
 					Task { await homeVM.loadRecommendedMeals() }
@@ -189,14 +191,10 @@ private struct Constants {
 	
 	struct Card {
 		static let inset: CGFloat = 12
-		static let maxW: CGFloat = 350
-		static let maxH: CGFloat = 350
 	}
 	
 	struct Placeholder {
 		static let opacity: CGFloat = 0.3
-		static let maxW: CGFloat = 350
-		static let maxH: CGFloat = 350
 	}
 	
 	struct Grid {

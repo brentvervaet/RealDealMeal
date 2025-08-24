@@ -21,29 +21,76 @@ class MealListViewModel: ObservableObject {
 	
 	@Published var categories: [Category] = []
 	@Published var selectedCategory: Category?
-	
+
+	// MARK: - Dependencies
+	private let service: APIServiceType
+
+	// MARK: - Init
+	init(service: APIServiceType = APIService.shared) {
+		self.service = service
+	}
+
 	// MARK: - Public Methods
 	
 	/// Searches for meals matching the current search query.
-	func searchMeals() async {
+	// Task used for the current search; will be cancelled when a new search is initiated
+	private var searchTask: Task<Void, Never>?
+
+	/// Public entry point to start a debounced search. Cancels prior task if active.
+	func searchMeals() {
+		// Avoid creating a search for empty queries
+		guard !searchQuery.isEmpty else { return }
+
+		// Cancel previous search task
+		searchTask?.cancel()
+
+		// Start new debounced task
+		searchTask = Task { [weak self] in
+			// Debounce: wait 300ms before firing the network call
+			try? await Task.sleep(nanoseconds: 300 * 1_000_000)
+			guard let self else { return }
+			await self.performSearch()
+		}
+	}
+
+	/// Perform the actual search; separated so it runs on the actor and can use await.
+	private func performSearch() async {
 		guard !searchQuery.isEmpty else { return }
 		isLoading = true
 		errorMessage = nil
-		
+
 		defer { isLoading = false }
-		
+
 		do {
-			let results = try await APIService.shared.fetchMeals(query: searchQuery)
+			// Allow cancellation to propagate
+			try Task.checkCancellation()
+			let results = try await service.fetchMeals(query: searchQuery)
 			meals = results
+		} catch is CancellationError {
+			// canceled - ignore
 		} catch {
-			errorMessage = "Failed to load meals: \(error.localizedDescription)"
+			// Map APIError to a friendly message when possible
+			if let apiErr = error as? APIError {
+				switch apiErr {
+				case .badURL:
+					errorMessage = "Invalid search query. Try a different word."
+				case .server:
+					errorMessage = "Server error. Please try again later."
+				case .decoding:
+					errorMessage = "Unexpected response from server."
+				case .transport:
+					errorMessage = "Network error. Check your connection."
+				}
+			} else {
+				errorMessage = "Failed to load meals: \(error.localizedDescription)"
+			}
 		}
 	}
 	
 	/// Loads the list of meal categories.
 	func loadCategories() async {
 		do {
-			let fetchedCategories = try await APIService.shared.fetchCategories()
+			let fetchedCategories = try await service.fetchCategories()
 			categories = fetchedCategories
 		} catch {
 			print("Error fetching categories: \(error)")
@@ -57,7 +104,7 @@ class MealListViewModel: ObservableObject {
 		defer { isLoading = false }
 		
 		do {
-			let fullMeals = try await APIService.shared.fetchMealsByCategory(category.strCategory)
+			let fullMeals = try await service.fetchMealsByCategory(category.strCategory)
 			meals = fullMeals
 		} catch {
 			errorMessage = "Error fetching meals by category: \(error.localizedDescription)"

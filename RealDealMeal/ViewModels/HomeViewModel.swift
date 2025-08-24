@@ -19,8 +19,16 @@ class HomeViewModel: ObservableObject {
 	@Published var errorMessage: String?
 	@Published var randomMeal: Meal?
 	
+	// MARK: - Dependencies
+	private let service: APIServiceType
+
 	// MARK: - Constants
 	private let recommendedMealCount = 9
+
+	// MARK: - Init
+	init(service: APIServiceType = APIService.shared) {
+		self.service = service
+	}
 	
 	// MARK: - Public Functions
 	
@@ -41,7 +49,7 @@ class HomeViewModel: ObservableObject {
 	/// - Returns: An optional `Meal` if fetching succeeds; otherwise, nil.
 	func loadRandomMeal() async -> Meal? {
 		do {
-			return try await APIService.shared.fetchRandomMeal()
+			return try await service.fetchRandomMeal()
 		} catch {
 			print("Failed to fetch random meal: \(error)")
 			return nil
@@ -55,14 +63,29 @@ class HomeViewModel: ObservableObject {
 	/// - Throws: Propagates any error thrown by the API service.
 	/// - Returns: An array of fetched `Meal` objects.
 	private func fetchMultipleRandomMeals(count: Int) async throws -> Meals {
-		var meals: Meals = []
-		while meals.count < count {
-			if let meal = try await APIService.shared.fetchRandomMeal() {
-				if !meals.contains(where: { $0.idMeal == meal.idMeal }) {
-					meals.append(meal)
+		var uniqueMeals: [String: Meal] = [:]
+
+		try await withThrowingTaskGroup(of: Meal?.self) { group in
+			// Start `count` child tasks in parallel
+			for _ in 0..<count {
+				group.addTask { [service] in
+					try await service.fetchRandomMeal()
+				}
+			}
+
+			for try await result in group {
+				try Task.checkCancellation()
+				if let meal = result {
+					uniqueMeals[meal.idMeal] = meal
+				}
+				if uniqueMeals.count >= count {
+					// Cancel remaining tasks when we've collected enough unique meals
+					group.cancelAll()
+					break
 				}
 			}
 		}
-		return meals
+
+		return Array(uniqueMeals.values)
 	}
 }

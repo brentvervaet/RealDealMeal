@@ -101,8 +101,6 @@ private struct Constants {
 	
 	struct Placeholder {
 		static let opacity: CGFloat = 0.3
-		static let maxW: CGFloat = 350
-		static let maxH: CGFloat = 350
 	}
 	
 	struct Grid {

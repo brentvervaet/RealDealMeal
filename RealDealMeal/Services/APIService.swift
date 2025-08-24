@@ -7,25 +7,48 @@
 
 import Foundation
 
-class APIService {
-	// MARK: - Typealiases
+// MARK: - API Errors
+/// Errors raised by the network layer. ViewModels map these to user-friendly messages.
+enum APIError: Error {
+	case badURL
+	case transport(Error)
+	case server(statusCode: Int, data: Data?)
+	case decoding(Error)
+}
+
+/// Protocol used by ViewModels so the service can be mocked in tests.
+protocol APIServiceType {
 	typealias MealResult = [Meal]
 	typealias CategoryResult = [MealCategory]
-	
-	// MARK: - Properties
+
+	func fetchMeals(query: String) async throws -> MealResult
+	func fetchCategories() async throws -> CategoryResult
+	func fetchMealsByCategory(_ category: String) async throws -> [Meal]
+	func fetchMealDetail(id: String) async throws -> Meal?
+	func fetchRandomMeal() async throws -> Meal?
+}
+
+
+final class APIService: APIServiceType {
+	// MARK: - Typealiases
 	static let shared = APIService()
 	private init() {}
-	
+
+	// Base URL for TheMealDB; acts as the Model/data layer.
 	private let baseURL = "https://www.themealdb.com/api/json/v1/1/"
 	private let decoder = JSONDecoder()
-	
+    
 	// MARK: - Methods
-	
-	/// Fetch meals matching the query string.
+    
+	/// Fetch meals matching the query string. Called from `MealListViewModel`.
 	/// - Parameter query: Search query string.
 	/// - Returns: Array of `Meal` objects.
 	func fetchMeals(query: String) async throws -> MealResult {
-		try await fetch(endpoint: "search.php?s=\(query)", decodeTo: MealResponse.self)
+		// Percent-encode the query to avoid bad URL errors when user types quickly
+		guard let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), !encoded.isEmpty else {
+			return []
+		}
+		return try await fetch(endpoint: "search.php?s=\(encoded)", decodeTo: MealResponse.self)
 			.meals ?? []
 	}
 	
@@ -36,17 +59,10 @@ class APIService {
 			.meals
 	}
 	
-	/// Fetch all meals by category, and upgrade them to full meals using lookup.
+	/// Fetch all meals by category using the centralized fetch helper.
 	func fetchMealsByCategory(_ category: String) async throws -> [Meal] {
-		// Stap 1: haal de "lichte" meals op
-		guard let url = URL(string: baseURL + "filter.php?c=\(category)") else {
-			throw URLError(.badURL)
-		}
-		let (data, _) = try await URLSession.shared.data(from: url)
-		let response = try decoder.decode(MealResponse.self, from: data)
-		let lightMeals = response.meals ?? []
-		
-		return lightMeals
+		try await fetch(endpoint: "filter.php?c=\(category)", decodeTo: MealResponse.self)
+			.meals ?? []
 	}
 	
 	/// Fetch detailed information for a meal by ID.
@@ -66,16 +82,34 @@ class APIService {
 	
 	// MARK: - Private Helper
 	
-	/// Generic fetch method to retrieve and decode data from API.
+	// MARK: - Private Helper
+	/// Generic fetch method to retrieve and decode data from API with basic HTTP error handling.
 	/// - Parameters:
 	///   - endpoint: API endpoint path.
 	///   - decodeTo: Decodable type to decode response into.
 	/// - Returns: Decoded response object.
+	/// ViewModels call this through the concrete methods above. Errors are intentionally
+	/// propagated so ViewModels can decide how to present them to the user.
 	private func fetch<T: Decodable>(endpoint: String, decodeTo: T.Type) async throws -> T {
-		guard let url = URL(string: baseURL + endpoint) else {
-			throw URLError(.badURL)
+		guard let url = URL(string: baseURL + endpoint) else { throw APIError.badURL }
+
+		do {
+			let (data, response) = try await URLSession.shared.data(from: url)
+			guard let http = response as? HTTPURLResponse else {
+				throw APIError.transport(URLError(.badServerResponse))
+			}
+			guard (200...299).contains(http.statusCode) else {
+				throw APIError.server(statusCode: http.statusCode, data: data)
+			}
+			do {
+				return try decoder.decode(T.self, from: data)
+			} catch {
+				throw APIError.decoding(error)
+			}
+		} catch is CancellationError {
+			throw CancellationError()
+		} catch {
+			throw APIError.transport(error)
 		}
-		let (data, _) = try await URLSession.shared.data(from: url)
-		return try decoder.decode(T.self, from: data)
 	}
 }

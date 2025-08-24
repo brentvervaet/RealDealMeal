@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 /// Displays detailed information about a meal, including image, title, ingredients, and instructions.
 struct MealDetailView: View {
@@ -13,6 +14,8 @@ struct MealDetailView: View {
 	// MARK: - Properties
 	let meal: Meal
 	@EnvironmentObject var favoritesVM: FavoritesViewModel
+	@State private var showingShare = false
+	@State private var shareItems: [Any] = []
 	
 	// MARK: - Body
 	var body: some View {
@@ -96,16 +99,16 @@ struct MealDetailView: View {
 	/// The share button.
 	private var shareButton: some View {
 		Button {
-			guard let url = URL(string: meal.strMealThumb ?? "") else { return }
-			let activityItems: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)", url]
-			let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-			if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-			   let rootVC = windowScene.windows.first?.rootViewController {
-				rootVC.present(activityVC, animated: true)
-			}
+			var items: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)"]
+			if let url = URL(string: meal.strMealThumb ?? "") { items.append(url) }
+			shareItems = items
+			showingShare = true
 		} label: {
 			Image(systemName: "square.and.arrow.up")
 				.font(.title2)
+		}
+		.sheet(isPresented: $showingShare) {
+			ShareSheet(activityItems: shareItems)
 		}
 	}
 	
@@ -157,8 +160,8 @@ struct MealDetailView: View {
 				.fontWeight(.semibold)
 				.underline()
 			LazyVStack(alignment: .leading, spacing: 4) {
-				ForEach(meal.ingredients.indices, id: \.self) { idx in
-					IngredientRow(ingredient: meal.ingredients[idx])
+				ForEach(Array(meal.ingredients.enumerated()), id: \.offset) {
+					IngredientRow(ingredient: $0.element)
 				}
 			}
 			.padding(.vertical)
@@ -172,8 +175,8 @@ struct MealDetailView: View {
 				.font(.title)
 				.fontWeight(.semibold)
 				.underline()
-			ForEach(Array(meal.instructionSteps.enumerated()), id: \.offset) { idx, step in
-				InstructionStepRow(index: idx, step: step)
+			ForEach(Array(meal.instructionSteps.enumerated()), id: \.offset) {
+				InstructionStepRow(index: $0.offset, step: $0.element)
 			}
 			.padding(.vertical)
 		}
@@ -208,38 +211,50 @@ struct MealDetailView: View {
 	
 	// MARK: - Typealiases
 	/// IngredientRow is a view representing a single ingredient line.
-	private typealias IngredientRow = IngredientRowView}
+	private typealias IngredientRow = IngredientRowView
+	
+	// MARK: - Style Constants
+	
+	private struct Constants {
+		
+		struct Corner {
+			static let cornerRadiusS: CGFloat = 12
+			static let cornerRadiusM: CGFloat = 16
+			static let cornerRadiusL: CGFloat = 24
+		}
+		
+		struct Shadow {
+			static let shadowOpacity: CGFloat = 0.15
+			static let shadowRadius: CGFloat = 10
+			static let shadowX: CGFloat = 1
+			static let shadowY: CGFloat = 5
+		}
+		
+		struct Row {
+			static let W: CGFloat = 100
+			static let H: CGFloat = 100
+		}
+		
+		struct Placeholder {
+			static let opacity: CGFloat = 0.3
+		}
+		
+		struct Grid {
+			static let spacing: CGFloat = 16
+		}
+		
+	}
+}
 
-// MARK: - Style Constants
+// MARK: - ShareSheet
 
-private struct Constants {
-	
-	struct Corner {
-		static let cornerRadiusS: CGFloat = 12
-		static let cornerRadiusM: CGFloat = 16
-		static let cornerRadiusL: CGFloat = 24
+/// Lightweight wrapper to present a UIActivityViewController from SwiftUI.
+private struct ShareSheet: UIViewControllerRepresentable {
+	let activityItems: [Any]
+
+	func makeUIViewController(context: Context) -> UIActivityViewController {
+		UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
 	}
-	
-	struct Shadow {
-		static let shadowOpacity: CGFloat = 0.15
-		static let shadowRadius: CGFloat = 10
-		static let shadowX: CGFloat = 1
-		static let shadowY: CGFloat = 5
-	}
-	
-	struct Row {
-		static let W: CGFloat = 100
-		static let H: CGFloat = 100
-	}
-	
-	struct Placeholder {
-		static let opacity: CGFloat = 0.3
-		static let maxW: CGFloat = 350
-		static let maxH: CGFloat = 350
-	}
-	
-	struct Grid {
-		static let spacing: CGFloat = 16
-	}
-	
+
+	func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 /// Response from the Meal API with array of meals.
+/// This mirrors the top-level JSON returned by TheMealDB endpoints.
 struct MealResponse: Codable {
 	let meals: [Meal]?
 }
@@ -67,14 +68,16 @@ struct Meal: Codable, Identifiable, Hashable {
 
 	// MARK: - Computed Properties
 
-	/// The unique identifier for the meal.
-	var id: String { idMeal }
+		/// The unique identifier for the meal. Used by SwiftUI `Identifiable`.
+		var id: String { idMeal }
 
-	/// A tuple representing an ingredient and its measure.
-	typealias Ingredient = (ingredient: String, measure: String)
+		/// A tuple representing an ingredient and its measure.
+		/// ViewModels and Views read `ingredients` to render ingredient lists.
+		typealias Ingredient = (ingredient: String, measure: String)
 
-	/// All non-empty ingredients and their measures for this meal.
-	var ingredients: [Ingredient] {
+		/// All non-empty ingredients and their measures for this meal.
+		/// This composes the 20 API fields into a friendly array used in the UI.
+		var ingredients: [Ingredient] {
 		let ingredientList = [
 			strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5,
 			strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10,
@@ -88,15 +91,13 @@ struct Meal: Codable, Identifiable, Hashable {
 			strMeasure16, strMeasure17, strMeasure18, strMeasure19, strMeasure20
 		]
 
-		var result: [Ingredient] = []
-		for (ingredient, measure) in zip(ingredientList, measureList) {
-			if let ingredient = ingredient,
-			   !ingredient.trimmingCharacters(in: .whitespaces).isEmpty {
-				let measureText = measure?.trimmingCharacters(in: .whitespaces) ?? ""
-				result.append((ingredient, measureText))
+		return zip(ingredientList, measureList)
+			.compactMap { ingredientOpt, measureOpt in
+				guard let ingredient = ingredientOpt?.trimmingCharacters(in: .whitespaces),
+					!ingredient.isEmpty else { return nil }
+				let measure = measureOpt?.trimmingCharacters(in: .whitespaces) ?? ""
+				return (ingredient, measure)
 			}
-		}
-		return result
 	}
 
 	/// Steps of instructions split by newlines

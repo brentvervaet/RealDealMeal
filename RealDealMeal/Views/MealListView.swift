@@ -36,7 +36,14 @@ struct MealListView: View {
 				.onSubmit {
 					// Reset selectedCategory when performing a search
 					mealListVM.selectedCategory = nil
-					Task { await mealListVM.searchMeals() }
+					mealListVM.searchMeals()
+				}
+				.onChange(of: mealListVM.searchQuery) { newValue in
+					// Live search: only start when user has typed at least 2 chars
+					mealListVM.selectedCategory = nil
+					if newValue.count >= 2 {
+						mealListVM.searchMeals()
+					}
 				}
 				.padding(10)
 				.background(Color(.systemBackground))
@@ -167,6 +174,7 @@ struct MealDetailWrapperView: View {
 	@State private var meal: Meal? = nil
 	@State private var isLoading = true
 	@State private var errorMessage: String? = nil
+	private let service: APIServiceType = APIService.shared
 	
 	var body: some View {
 		Group {
@@ -192,7 +200,7 @@ struct MealDetailWrapperView: View {
 	private func loadDetails() async {
 		do {
 			isLoading = true
-			meal = try await APIService.shared.fetchMealDetail(id: mealID)
+			meal = try await service.fetchMealDetail(id: mealID)
 			errorMessage = nil
 		} catch {
 			errorMessage = "Failed to load details"
@@ -225,8 +233,6 @@ private struct Constants {
 	
 	struct Placeholder {
 		static let opacity: CGFloat = 0.3
-		static let maxW: CGFloat = 350
-		static let maxH: CGFloat = 350
 	}
 	
 	struct Grid {
