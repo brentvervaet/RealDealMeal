@@ -9,16 +9,16 @@ import SwiftUI
 
 @MainActor
 class HomeViewModel: ObservableObject {
-	
+
 	// MARK: - Typealiases
 	typealias Meals = [Meal]
-	
+
 	// MARK: - Published Properties
 	@Published var recommendedMeals: Meals = []
 	@Published var isLoading = false
 	@Published var errorMessage: String?
 	@Published var randomMeal: Meal?
-	
+
 	// MARK: - Dependencies
 	private let service: APIServiceType
 
@@ -29,14 +29,14 @@ class HomeViewModel: ObservableObject {
 	init(service: APIServiceType = APIService.shared) {
 		self.service = service
 	}
-	
+
 	// MARK: - Public Functions
-	
+
 	/// Loads recommended meals asynchronously and updates the published properties accordingly.
 	func loadRecommendedMeals() async {
 		isLoading = true
 		defer { isLoading = false }
-		
+
 		do {
 			recommendedMeals = try await fetchMultipleRandomMeals(count: recommendedMealCount)
 			errorMessage = nil
@@ -44,7 +44,7 @@ class HomeViewModel: ObservableObject {
 			errorMessage = "Failed to load daily meals: \(error.localizedDescription)"
 		}
 	}
-	
+
 	/// Loads a single random meal asynchronously.
 	/// - Returns: An optional `Meal` if fetching succeeds; otherwise, nil.
 	func loadRandomMeal() async -> Meal? {
@@ -55,9 +55,9 @@ class HomeViewModel: ObservableObject {
 			return nil
 		}
 	}
-	
+
 	// MARK: - Private Functions
-	
+
 	/// Fetches a specified number of random meals asynchronously.
 	/// - Parameter count: The number of random meals to fetch.
 	/// - Throws: Propagates any error thrown by the API service.

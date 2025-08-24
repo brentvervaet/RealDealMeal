@@ -9,18 +9,18 @@ import SwiftUI
 
 struct HomeView: View {
 	@StateObject private var homeVM = HomeViewModel()
-	@State private var randomMealID: String? = nil
+	@State private var randomMealID: String?
 	@State private var showRandomMealDetail: Bool = false
 	@State private var showInfo: Bool = false
-	
+
 	var body: some View {
 		NavigationStack {
-			
+
 			GeometryReader { bounds in
-				
+
 				ScrollView {
 					VStack(alignment: .leading, spacing: 16) {
-						
+
 						// Recommendations header
 						HStack {
 							Text("Recommendations")
@@ -33,15 +33,13 @@ struct HomeView: View {
 							}
 						}
 						.padding(.horizontal)
-						
+
 						randomRecipeButton
 							.padding(.horizontal)
-						
-						
-						
+
 						// Adaptive grid based on screen width
 						let columns = adaptiveColumns(for: bounds.size.width)
-						
+
 						LazyVGrid(columns: columns, spacing: Constants.Grid.spacing) {
 							ForEach(homeVM.recommendedMeals) { meal in
 								NavigationLink(destination: MealDetailWrapperView(mealID: meal.idMeal)) {
@@ -54,7 +52,7 @@ struct HomeView: View {
 					}
 					.padding(.vertical)
 				}
-				
+
 			}
 			.navigationTitle("Home")
 			.navigationDestination(isPresented: $showRandomMealDetail) {
@@ -79,8 +77,8 @@ struct HomeView: View {
 			}
 		}
 	}
-	
-	//MARK: private func
+
+	// MARK: private func
 	/// Adjust number of columns depending on screen width
 	private func adaptiveColumns(for width: CGFloat) -> [GridItem] {
 		if width > 600 {
@@ -92,9 +90,9 @@ struct HomeView: View {
 			return Array(repeating: GridItem(.flexible(), spacing: Constants.Grid.spacing), count: 2)
 		}
 	}
-	
-	//MARK: - private views
-	
+
+	// MARK: - private views
+
 	private var randomRecipeButton: some View {
 		Button {
 			Task {
@@ -129,8 +127,7 @@ struct HomeView: View {
 struct MealCard: View {
 	let meal: Meal
 	@Environment(\.colorScheme) private var colorScheme
-	
-	
+
 	var body: some View {
 		VStack {
 			AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
@@ -171,38 +168,37 @@ struct MealCard: View {
 // MARK: - Style Constants
 
 private struct Constants {
-	
+
 	struct Corner {
 		static let cornerRadiusS: CGFloat = 12
 		static let cornerRadiusM: CGFloat = 16
 		static let cornerRadiusL: CGFloat = 24
 	}
-	
+
 	struct Shadow {
 		static let shadowOpacity: CGFloat = 0.15
 		static let shadowRadius: CGFloat = 10
 		static let shadowX: CGFloat = 0
 		static let shadowY: CGFloat = 5
 	}
-	
+
 	struct Button {
 		static let maxWidth: CGFloat = 500
 	}
-	
+
 	struct Card {
 		static let inset: CGFloat = 12
 	}
-	
+
 	struct Placeholder {
 		static let opacity: CGFloat = 0.3
 	}
-	
+
 	struct Grid {
 		static let spacing: CGFloat = 16
 	}
-	
-}
 
+}
 
 #Preview {
 	HomeView()

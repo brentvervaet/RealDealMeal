@@ -28,7 +28,6 @@ protocol APIServiceType {
 	func fetchRandomMeal() async throws -> Meal?
 }
 
-
 final class APIService: APIServiceType {
 	// MARK: - Typealiases
 	static let shared = APIService()
@@ -37,9 +36,9 @@ final class APIService: APIServiceType {
 	// Base URL for TheMealDB; acts as the Model/data layer.
 	private let baseURL = "https://www.themealdb.com/api/json/v1/1/"
 	private let decoder = JSONDecoder()
-    
+
 	// MARK: - Methods
-    
+
 	/// Fetch meals matching the query string. Called from `MealListViewModel`.
 	/// - Parameter query: Search query string.
 	/// - Returns: Array of `Meal` objects.
@@ -51,20 +50,20 @@ final class APIService: APIServiceType {
 		return try await fetch(endpoint: "search.php?s=\(encoded)", decodeTo: MealResponse.self)
 			.meals ?? []
 	}
-	
+
 	/// Fetch all meal categories.
 	/// - Returns: Array of `MealCategory` objects.
 	func fetchCategories() async throws -> CategoryResult {
 		try await fetch(endpoint: "list.php?c=list", decodeTo: CategoryResponse.self)
 			.meals
 	}
-	
+
 	/// Fetch all meals by category using the centralized fetch helper.
 	func fetchMealsByCategory(_ category: String) async throws -> [Meal] {
 		try await fetch(endpoint: "filter.php?c=\(category)", decodeTo: MealResponse.self)
 			.meals ?? []
 	}
-	
+
 	/// Fetch detailed information for a meal by ID.
 	/// - Parameter id: Meal identifier.
 	/// - Returns: Optional `Meal` object.
@@ -72,16 +71,16 @@ final class APIService: APIServiceType {
 		try await fetch(endpoint: "lookup.php?i=\(id)", decodeTo: MealResponse.self)
 			.meals?.first
 	}
-	
+
 	/// Fetch a random meal.
 	/// - Returns: Optional `Meal` object.
 	func fetchRandomMeal() async throws -> Meal? {
 		try await fetch(endpoint: "random.php", decodeTo: MealResponse.self)
 			.meals?.first
 	}
-	
+
 	// MARK: - Private Helper
-	
+
 	// MARK: - Private Helper
 	/// Generic fetch method to retrieve and decode data from API with basic HTTP error handling.
 	/// - Parameters:

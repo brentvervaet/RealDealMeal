@@ -9,14 +9,14 @@ import SwiftUI
 
 struct InfoView: View {
 	// MARK: - Properties
-	
+
 	private let portfolioURL = URL(string: "https://brentvervaet-dev.vercel.app")!
 	private let descriptionText = """
  RealDealMeal is your go-to app for discovering delicious recipes and meal ideas. Explore recommendations or get a random recipe to spice up your cooking!
  """
-	
+
 	// MARK: - Body
-	
+
 	/// The main content view displaying app information and a portfolio link.
 	var body: some View {
 		NavigationStack {
@@ -25,9 +25,9 @@ struct InfoView: View {
 				.navigationBarTitleDisplayMode(.inline)
 		}
 	}
-	
+
 	// MARK: - Private Views
-	
+
 	/// Vertical stack containing the description, link, and spacer.
 	private var content: some View {
 		VStack(spacing: 20) {
@@ -37,13 +37,13 @@ struct InfoView: View {
 		}
 		.padding()
 	}
-	
+
 	/// Text view showing the app description.
 	private var descriptionTextView: some View {
 		Text(descriptionText)
 			.multilineTextAlignment(.center)
 	}
-	
+
 	/// Link to the developer's portfolio.
 	private var portfolioLink: some View {
 		Link("Visit my Portfolio", destination: portfolioURL)

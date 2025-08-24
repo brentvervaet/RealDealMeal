@@ -10,26 +10,26 @@ import UIKit
 
 /// Displays detailed information about a meal, including image, title, ingredients, and instructions.
 struct MealDetailView: View {
-	
+
 	// MARK: - Properties
 	let meal: Meal
 	@EnvironmentObject var favoritesVM: FavoritesViewModel
 	@State private var showingShare = false
 	@State private var shareItems: [Any] = []
-	
+
 	// MARK: - Body
 	var body: some View {
 		GeometryReader { bounds in
 			ScrollView {
 				if bounds.size.width > 700 { // wide screens → horizontal layout
-					VStack{
+					VStack {
 						HStack(alignment: .bottom, spacing: 20) {
 							mealImage
 								.frame(width: min(bounds.size.width * 0.4, 400)) // max 400 wide
 							titleAndButtons
 						}
 						detailCard
-						
+
 					}
 					.padding()
 					.frame(maxWidth: bounds.size.width * 0.8 )
@@ -50,7 +50,7 @@ struct MealDetailView: View {
 		.navigationBarTitleDisplayMode(.inline)
 	}
 	// MARK: - Private Views
-	
+
 	/// The meal image with styling.
 	private var mealImage: some View {
 		AsyncImage(url: URL(string: meal.strMealThumb ?? "")) { image in
@@ -70,7 +70,7 @@ struct MealDetailView: View {
 			x: Constants.Shadow.shadowX,
 			y: Constants.Shadow.shadowY
 		)	}
-	
+
 	/// The title and action buttons row.
 	private var titleAndButtons: some View {
 		HStack {
@@ -82,7 +82,7 @@ struct MealDetailView: View {
 			shareButton
 		}
 	}
-	
+
 	/// The favorite button.
 	private var favoriteButton: some View {
 		Button {
@@ -95,7 +95,7 @@ struct MealDetailView: View {
 				.font(.title2)
 		}
 	}
-	
+
 	/// The share button.
 	private var shareButton: some View {
 		Button {
@@ -111,7 +111,7 @@ struct MealDetailView: View {
 			ShareSheet(activityItems: shareItems)
 		}
 	}
-	
+
 	/// The main detail card showing ingredients and instructions.
 	private var detailCard: some View {
 		VStack(alignment: .leading, spacing: 16) {
@@ -139,7 +139,7 @@ struct MealDetailView: View {
 			y: Constants.Shadow.shadowY
 		)
 	}
-	
+
 	/// Placeholder view for missing meal details.
 	private var comingSoon: some View {
 		HStack {
@@ -151,7 +151,7 @@ struct MealDetailView: View {
 		}
 		.frame(maxWidth: .infinity)
 	}
-	
+
 	/// The ingredients section.
 	private var ingredientsSection: some View {
 		VStack(alignment: .leading, spacing: 8) {
@@ -167,7 +167,7 @@ struct MealDetailView: View {
 			.padding(.vertical)
 		}
 	}
-	
+
 	/// The instructions section.
 	private var instructionsSection: some View {
 		VStack(alignment: .leading, spacing: 8) {
@@ -181,7 +181,7 @@ struct MealDetailView: View {
 			.padding(.vertical)
 		}
 	}
-	
+
 	// MARK: - Row Views
 	/// Displays a single ingredient row.
 	private struct IngredientRowView: View {
@@ -193,7 +193,7 @@ struct MealDetailView: View {
 			}
 		}
 	}
-	
+
 	/// Displays a single instruction step row.
 	private struct InstructionStepRow: View {
 		let index: Int
@@ -208,41 +208,41 @@ struct MealDetailView: View {
 			}
 		}
 	}
-	
+
 	// MARK: - Typealiases
 	/// IngredientRow is a view representing a single ingredient line.
 	private typealias IngredientRow = IngredientRowView
-	
+
 	// MARK: - Style Constants
-	
+
 	private struct Constants {
-		
+
 		struct Corner {
 			static let cornerRadiusS: CGFloat = 12
 			static let cornerRadiusM: CGFloat = 16
 			static let cornerRadiusL: CGFloat = 24
 		}
-		
+
 		struct Shadow {
 			static let shadowOpacity: CGFloat = 0.15
 			static let shadowRadius: CGFloat = 10
 			static let shadowX: CGFloat = 1
 			static let shadowY: CGFloat = 5
 		}
-		
+
 		struct Row {
 			static let W: CGFloat = 100
 			static let H: CGFloat = 100
 		}
-		
+
 		struct Placeholder {
 			static let opacity: CGFloat = 0.3
 		}
-		
+
 		struct Grid {
 			static let spacing: CGFloat = 16
 		}
-		
+
 	}
 }
 

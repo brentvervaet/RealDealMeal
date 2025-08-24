@@ -9,16 +9,16 @@ import SwiftUI
 
 @MainActor
 class MealListViewModel: ObservableObject {
-	
+
 	// MARK: - Typealiases
 	typealias Category = MealCategory
-	
+
 	// MARK: - Published Properties
 	@Published var meals: [Meal] = []
 	@Published var searchQuery: String = ""
 	@Published var isLoading = false
-	@Published var errorMessage: String? = nil
-	
+	@Published var errorMessage: String?
+
 	@Published var categories: [Category] = []
 	@Published var selectedCategory: Category?
 
@@ -31,7 +31,7 @@ class MealListViewModel: ObservableObject {
 	}
 
 	// MARK: - Public Methods
-	
+
 	/// Searches for meals matching the current search query.
 	// Task used for the current search; will be cancelled when a new search is initiated
 	private var searchTask: Task<Void, Never>?
@@ -86,7 +86,7 @@ class MealListViewModel: ObservableObject {
 			}
 		}
 	}
-	
+
 	/// Loads the list of meal categories.
 	func loadCategories() async {
 		do {
@@ -96,13 +96,13 @@ class MealListViewModel: ObservableObject {
 			print("Error fetching categories: \(error)")
 		}
 	}
-	
+
 	/// Fetches full meals for the specified category using APIService.
 	func loadMealsByCategory(_ category: Category) async {
 		isLoading = true
 		errorMessage = nil
 		defer { isLoading = false }
-		
+
 		do {
 			let fullMeals = try await service.fetchMealsByCategory(category.strCategory)
 			meals = fullMeals
@@ -113,7 +113,7 @@ class MealListViewModel: ObservableObject {
 	}
 }
 
-//MARK: - ViewState
+// MARK: - ViewState
 /*enum ViewState {
 	case idle
 	case loading

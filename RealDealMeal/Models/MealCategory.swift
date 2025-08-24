@@ -19,9 +19,9 @@ struct CategoryResponse: Codable {
 struct MealCategory: Codable, Identifiable, Hashable {
 	/// API Properties
 	let strCategory: String
-    
+
 	var id: String { strCategory }
-    
+
 	/// Swift-friendly name of the category.
 	var name: String { strCategory }
 }

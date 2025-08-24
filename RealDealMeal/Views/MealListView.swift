@@ -8,26 +8,26 @@
 import SwiftUI
 
 struct MealListView: View {
-	
+
 	@StateObject private var mealListVM = MealListViewModel()
 	private typealias Category = MealCategory
-	
+
 	var body: some View {
-		GeometryReader{ bounds in
+		GeometryReader { _ in
 			NavigationStack {
 				VStack(alignment: .leading) {
 					searchBar
 					categoryList
 					contentView
-					
+
 				}
 				.navigationTitle("Find a recipe")
 			}
 		}
 	}
-	
+
 	// MARK: - Private Views
-	
+
 	/// Search bar with text field and submit action
 	private var searchBar: some View {
 		HStack {
@@ -50,16 +50,16 @@ struct MealListView: View {
 				.cornerRadius(Constants.Corner.cornerRadiusS)
 				.shadow(
 					color: Color.primary.opacity(Constants.Shadow.shadowOpacity),
-					radius: Constants.Shadow.shadowRadius ,
+					radius: Constants.Shadow.shadowRadius,
 					x: Constants.Shadow.shadowX,
 					y: Constants.Shadow.shadowY
 				)
-			
+
 		}
 		.padding(.horizontal)
 		.padding(.top)
 	}
-	
+
 	/// Horizontally scrollable list of categories as selectable buttons
 	private var categoryList: some View {
 		ScrollView(.horizontal, showsIndicators: false ) {
@@ -74,7 +74,7 @@ struct MealListView: View {
 			}
 		}
 	}
-	
+
 	/// Button view for a meal category
 	private func categoryButton(for category: Category) -> some View {
 		Button {
@@ -97,7 +97,7 @@ struct MealListView: View {
 				.clipShape(Capsule())
 		}
 	}
-	
+
 	/// Main content view showing either error message or list of meals
 	@ViewBuilder
 	private var contentView: some View {
@@ -117,7 +117,7 @@ struct MealListView: View {
 			}
 		}
 	}
-	
+
 	/// Scrollable list of meals with navigation links to detail views
 	private var mealList: some View {
 		ScrollView {
@@ -131,7 +131,7 @@ struct MealListView: View {
 			.padding()
 		}
 	}
-	
+
 	/// Single row view representing a meal in the list
 	private func mealRow(for meal: Meal) -> some View {
 		HStack(spacing: 16) {
@@ -145,11 +145,11 @@ struct MealListView: View {
 			.clipShape(
 				RoundedRectangle(cornerRadius: Constants.Corner.cornerRadiusS)
 			)
-			
+
 			Text(meal.strMeal)
 				.font(.headline)
 				.foregroundColor(.primary)
-			
+
 			Spacer()
 			Image(systemName: "chevron.right")
 				.foregroundColor(.gray)
@@ -164,18 +164,18 @@ struct MealListView: View {
 			x: Constants.Shadow.shadowX,
 			y: Constants.Shadow.shadowY
 		)
-		
+
 	}
 }
 
 struct MealDetailWrapperView: View {
-	
+
 	let mealID: String
-	@State private var meal: Meal? = nil
+	@State private var meal: Meal?
 	@State private var isLoading = true
-	@State private var errorMessage: String? = nil
+	@State private var errorMessage: String?
 	private let service: APIServiceType = APIService.shared
-	
+
 	var body: some View {
 		Group {
 			if isLoading {
@@ -193,9 +193,9 @@ struct MealDetailWrapperView: View {
 		.navigationTitle("Details")
 		.navigationBarTitleDisplayMode(.inline)
 	}
-	
+
 	// MARK: - Private Methods
-	
+
 	/// Loads detailed meal information asynchronously
 	private func loadDetails() async {
 		do {
@@ -212,33 +212,33 @@ struct MealDetailWrapperView: View {
 // MARK: - Style Constants
 
 private struct Constants {
-	
+
 	struct Corner {
 		static let cornerRadiusS: CGFloat = 12
 		static let cornerRadiusM: CGFloat = 16
 		static let cornerRadiusL: CGFloat = 24
 	}
-	
+
 	struct Shadow {
 		static let shadowOpacity: CGFloat = 0.15
 		static let shadowRadius: CGFloat = 10
 		static let shadowX: CGFloat = 0
 		static let shadowY: CGFloat = 5
 	}
-	
+
 	struct Row {
 		static let W: CGFloat = 100
 		static let H: CGFloat = 100
 	}
-	
+
 	struct Placeholder {
 		static let opacity: CGFloat = 0.3
 	}
-	
+
 	struct Grid {
 		static let spacing: CGFloat = 16
 	}
-	
+
 }
 
 // MARK: - Preview
