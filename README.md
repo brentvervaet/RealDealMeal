@@ -23,11 +23,10 @@ RealDealMeal helps you find cooking inspiration fast:
 | Favorites | Persistent JSON storage via `@AppStorage`, instant UI updates |
 | Sharing | Native `UIActivityViewController` wrapper |
 | Layout | Adaptive grids (2–3 columns) & responsive detail layout (compact vs wide) |
-| Error Handling | Granular `APIError` mapping to user-friendly messages |
 
 ## Architecture
 
-The app follows MVVM with a thin service layer.
+The app follows MVVM with a service layer.
 
 ```text
 View (SwiftUI)  -> observes  Published state on  ViewModel
@@ -39,7 +38,6 @@ Model           -> Codable structs + computed helpers (ingredients, steps)
 
 ### Key Design Choices
 
-* `APIServiceType` protocol allows mocking in future unit tests.
 * Random meal recommendations fetched concurrently with `TaskGroup` and early cancellation when enough unique results are collected.
 * Debounced search leverages a cancelable `Task` + `Task.sleep` for a responsive typing experience without flooding the network.
 * Ingredient list is synthesized at model level (`Meal.ingredients`) → keeps Views simple and consistent.
@@ -47,19 +45,19 @@ Model           -> Codable structs + computed helpers (ingredients, steps)
 
 ## Data Source
 
-All recipe data comes from the public TheMealDB v1 API (`https://www.themealdb.com/api/json/v1/1/`). Only read operations are performed; no user-generated content is sent.
+All recipe data comes from the public TheMealDB v1 API (`https://www.themealdb.com/api/json/v1/1/`).
 
 ## Requirements
 
-* macOS with Xcode 15 or newer (Swift 5.9+)
-* iOS 17 simulator or device (older may work but not explicitly targeted yet)
+* macOS with Xcode 16 or newer
+* iOS 18 simulator or device (older may work)
 * Network access
 
 ## Getting Started
 
 1. Clone the repository.
-2. Open `RealDealMeal.xcodeproj` (or the workspace if you later add SwiftPM packages).
-3. Select an iOS Simulator (e.g. iPhone 16) and press Run.
+2. Open `RealDealMeal.xcodeproj`.
+3. Select an iOS Simulator (e.g. iPhone 16 Pro) and press Run.
 
 No API key setup required (TheMealDB free tier endpoints are used).
 
