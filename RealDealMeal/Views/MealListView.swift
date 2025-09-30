@@ -13,7 +13,7 @@ struct MealListView: View {
 	private typealias Category = MealCategory
 
 	var body: some View {
-		GeometryReader { _ in
+		// GeometryReader { _ in
 			NavigationStack {
 				VStack(alignment: .leading) {
 					searchBar
@@ -23,7 +23,7 @@ struct MealListView: View {
 				}
 				.navigationTitle("Find a recipe")
 			}
-		}
+		// }
 	}
 
 	// MARK: - Private Views
@@ -37,7 +37,7 @@ struct MealListView: View {
 					mealListVM.selectedCategory = nil
 					mealListVM.searchMeals()
 				}
-				.onChange(of: mealListVM.searchQuery) { _, newValue in
+				.onChange(of: mealListVM.searchQuery) { _, newValue in /// .onChange 2-3 params
 					// Live search: only start when user has typed at least 2 chars
 					mealListVM.selectedCategory = nil
 					if newValue.count >= 2 {

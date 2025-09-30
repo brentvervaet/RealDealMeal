@@ -73,5 +73,7 @@ final class FavoritesViewModel: ObservableObject {
 	/// - Parameter meal: The meal to add.
 	private func addFavorite(_ meal: Meal) {
 		favorites.append(meal)
+		// Debug log of what was saved. Adjust fields as needed.
+		print("[Favorites] Added meal id=\(meal.idMeal) name=\(meal.strMeal) ingredients=\(meal.ingredients.count) savedCount=\(favorites.count) thumb=\(meal.strMealThumb ?? "no-url")")
 	}
 }

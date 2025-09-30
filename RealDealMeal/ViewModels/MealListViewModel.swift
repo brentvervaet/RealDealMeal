@@ -9,9 +9,9 @@ import SwiftUI
 
 @MainActor
 class MealListViewModel: ObservableObject {
-
-	// MARK: - Typealiases
-	typealias Category = MealCategory
+	/// Searches for meals matching the current search query.
+	// Task used for the current search
+	private var searchTask: Task<Void, Never>?
 
 	// MARK: - Published Properties
 	@Published var meals: [Meal] = []
@@ -19,8 +19,8 @@ class MealListViewModel: ObservableObject {
 	@Published var isLoading = false
 	@Published var errorMessage: String?
 
-	@Published var categories: [Category] = []
-	@Published var selectedCategory: Category?
+	@Published var categories: [MealCategory] = []
+	@Published var selectedCategory: MealCategory?
 
 	// MARK: - Dependencies
 	private let service: APIServiceType
@@ -31,10 +31,6 @@ class MealListViewModel: ObservableObject {
 	}
 
 	// MARK: - Public Methods
-
-	/// Searches for meals matching the current search query.
-	// Task used for the current search
-	private var searchTask: Task<Void, Never>?
 
 	/// Public entry point to start a debounced search. Cancels prior task if active.
 	func searchMeals() {
@@ -70,8 +66,8 @@ class MealListViewModel: ObservableObject {
 			// canceled - ignore
 		} catch {
 			// Map APIError to a friendly message when possible
-			if let apiErr = error as? APIError {
-				switch apiErr {
+			if let apiError = error as? APIError {
+				switch apiError {
 				case .badURL:
 					errorMessage = "Invalid search query. Try a different word."
 				case .server:
@@ -98,7 +94,7 @@ class MealListViewModel: ObservableObject {
 	}
 
 	/// Fetches full meals for the specified category using APIService.
-	func loadMealsByCategory(_ category: Category) async {
+	func loadMealsByCategory(_ category: MealCategory) async {
 		isLoading = true
 		errorMessage = nil
 		defer { isLoading = false }

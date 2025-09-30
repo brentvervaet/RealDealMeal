@@ -57,7 +57,7 @@ final class APIService: APIServiceType {
 			.meals
 	}
 
-	/// Fetch all meals by category using the centralized fetch helper.
+	/// Fetch all partial meals by category using the centralized fetch helper.
 	func fetchMealsByCategory(_ category: String) async throws -> [Meal] {
 		try await fetch(endpoint: "filter.php?c=\(category)", decodeTo: MealResponse.self)
 			.meals ?? []

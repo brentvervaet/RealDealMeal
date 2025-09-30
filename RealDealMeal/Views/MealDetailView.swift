@@ -98,6 +98,24 @@ struct MealDetailView: View {
 
 	// The share button.
 	private var shareButton: some View {
+
+		Button {
+			guard let url = URL(string: meal.strMealThumb ?? "") else { return }
+			let activityItems: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)", url]
+			let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+
+			// Find the topmost view controller to present the sheet
+			if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+			   let rootVC = windowScene.windows.first?.rootViewController {
+				rootVC.present(activityVC, animated: true)
+			}
+		} label: {
+			Image(systemName: "square.and.arrow.up")
+				.font(.title2)
+		}
+
+		/// this uses UIViewControllerRepresentable protocol, but it broke the share button sometimes so i left it
+		/*
 		Button {
 			var items: [Any] = ["Check out this recipe from RealDealMeal: \(meal.strMeal)"]
 			if let url = URL(string: meal.strMealThumb ?? "") { items.append(url) }
@@ -110,6 +128,7 @@ struct MealDetailView: View {
 		.sheet(isPresented: $showingShare) {
 			ShareSheet(activityItems: shareItems)
 		}
+		 */
 	}
 
 	// The main detail card showing ingredients and instructions.
@@ -213,17 +232,6 @@ struct MealDetailView: View {
 	// IngredientRow is a view representing a single ingredient line.
 	private typealias IngredientRow = IngredientRowView
 
-}
-
-// MARK: - ShareSheet
-private struct ShareSheet: UIViewControllerRepresentable {
-	let activityItems: [Any]
-
-	func makeUIViewController(context: Context) -> UIActivityViewController {
-		UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-	}
-
-	func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 // MARK: - Style Constants
